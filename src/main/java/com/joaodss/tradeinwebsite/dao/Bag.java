@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 import static javax.persistence.EnumType.STRING;
@@ -50,4 +51,24 @@ public class Bag extends Product {
     })
     private BagPhotos bagPhotos;
 
+
+    // -------------------- Custom Constructor --------------------
+
+
+    // -------------------- Hashcode and Equals --------------------
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Bag bag = (Bag) o;
+        return bagSize == bag.bagSize &&
+                Objects.equals(bagExtras, bag.bagExtras) &&
+                Objects.equals(bagPhotos, bag.bagPhotos);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), bagSize, bagExtras, bagPhotos);
+    }
 }
