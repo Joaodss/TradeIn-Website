@@ -6,10 +6,10 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class TradeInWebsiteApplicationTests {
+public class TemporaryIntegrationTest {
 
     @Test
-    void contextLoads() {
+    void temporaryEmpty() {
     }
 
 }
