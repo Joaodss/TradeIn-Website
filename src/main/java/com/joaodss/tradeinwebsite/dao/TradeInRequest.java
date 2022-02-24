@@ -16,7 +16,7 @@ import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "trade_in_request")
+@Table(name = "Trade_in_request")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

@@ -8,7 +8,7 @@ import javax.persistence.*;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "product")
+@Table(name = "Product")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -22,7 +22,7 @@ public abstract class Product {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "trade_in_request_id")
     private TradeInRequest tradeInRequest;
 
