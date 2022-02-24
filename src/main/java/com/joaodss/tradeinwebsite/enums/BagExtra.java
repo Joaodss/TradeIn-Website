@@ -1,6 +1,6 @@
 package com.joaodss.tradeinwebsite.enums;
 
-public enum BagExtras {
+public enum BagExtra {
     BOX,
     AUTHENTICITY_CARD,
     SHOULDER_STRAP,
