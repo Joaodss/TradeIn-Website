@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -51,21 +50,23 @@ public class TradeInRequest {
     private List<Product> products = new ArrayList<>();
 
 
+    // -------------------- Custom Constructor --------------------
+
+
     // -------------------- Hashcode and Equals --------------------
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TradeInRequest that = (TradeInRequest) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(contact, that.contact) &&
-                Objects.equals(shippingCountry, that.shippingCountry) &&
-                requestStatus == that.requestStatus &&
-                Objects.equals(products, that.products);
+        return id.equals(that.id) &&
+                contact.equals(that.contact) &&
+                shippingCountry.equals(that.shippingCountry) &&
+                requestStatus == that.requestStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, contact, shippingCountry, requestStatus, products);
+        return Objects.hash(id, contact, shippingCountry, requestStatus);
     }
 }

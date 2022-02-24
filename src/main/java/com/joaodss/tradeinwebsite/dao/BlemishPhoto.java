@@ -44,7 +44,9 @@ public class BlemishPhoto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BlemishPhoto that = (BlemishPhoto) o;
-        return Objects.equals(id, that.id) && Objects.equals(product, that.product) && Objects.equals(photoURL, that.photoURL);
+        return id.equals(that.id) &&
+                product.equals(that.product) &&
+                photoURL.equals(that.photoURL);
     }
 
     @Override
