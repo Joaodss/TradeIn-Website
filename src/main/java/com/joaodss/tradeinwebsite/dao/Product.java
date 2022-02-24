@@ -13,11 +13,11 @@ import java.util.Objects;
 
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
-import static javax.persistence.InheritanceType.TABLE_PER_CLASS;
+import static javax.persistence.InheritanceType.JOINED;
 
 @Entity
-@Inheritance(strategy = TABLE_PER_CLASS)
-@Table(name = "Product")
+@Inheritance(strategy = JOINED)
+@Table(name = "product")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -47,15 +47,16 @@ public abstract class Product {
     private String model;
 
     @Enumerated(STRING)
-    @Column(name = "condition", nullable = false)
+    @Column(name = "product_condition", nullable = false)
     private Condition condition;
 
     @Column(name = "details")
     private String details;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "photoURL")
-    private List<BlemishPhoto> blemishPhotos = new ArrayList<>();
+    @ElementCollection(targetClass = String.class)
+    @CollectionTable(name = "blemish_photos")
+    @Column(name = "photo_url")
+    private List<String> blemishPhotos = new ArrayList<>();
 
 
     // -------------------- Custom Constructor --------------------
