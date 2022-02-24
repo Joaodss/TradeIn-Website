@@ -32,7 +32,7 @@ public abstract class Product {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "trade_in_request_id")
+    @JoinColumn(name = "trade_in_request_id", nullable = false)
     private TradeInRequest tradeInRequest;
 
     @Enumerated(STRING)
