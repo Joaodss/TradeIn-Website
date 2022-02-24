@@ -13,8 +13,10 @@ import java.util.Objects;
 
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.InheritanceType.TABLE_PER_CLASS;
 
 @Entity
+@Inheritance(strategy = TABLE_PER_CLASS)
 @Table(name = "Product")
 @AllArgsConstructor
 @NoArgsConstructor
