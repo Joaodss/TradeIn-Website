@@ -47,7 +47,7 @@ public class TradeInRequest {
     private RequestStatus requestStatus;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "tradeInRequest", cascade = {REMOVE})
+    @OneToMany(mappedBy = "tradeInRequest")
     private List<Product> products = new ArrayList<>();
 
 
