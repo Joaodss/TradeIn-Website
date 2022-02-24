@@ -87,11 +87,11 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
-<!--                            <excludes>-->
-<!--                                <exclude>**/*Application.class</exclude>-->
+                            <excludes>
+                                <exclude>**/*Application.class</exclude>
 <!--                                <exclude>**/dao/*.class</exclude>-->
 <!--                                <exclude>**/dto/*.class</exclude>-->
-<!--                            </excludes>-->
+                            </excludes>
                             <rules>
                                 <rule>
                                     <element>CLASS</element>
