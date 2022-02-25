@@ -79,13 +79,13 @@ public class TradeInRequest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TradeInRequest that = (TradeInRequest) o;
-        return id.equals(that.id) &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
-                email.equals(that.email) &&
+                Objects.equals(email, that.email) &&
                 Objects.equals(mobileNumber, that.mobileNumber) &&
-                shippingCountry == that.shippingCountry &&
-                requestStatus == that.requestStatus;
+                Objects.equals(shippingCountry, that.shippingCountry) &&
+                Objects.equals(requestStatus, that.requestStatus);
     }
 
     @Override

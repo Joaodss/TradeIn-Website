@@ -3,10 +3,12 @@ package com.joaodss.tradeinwebsite.builder.builders;
 import com.joaodss.tradeinwebsite.dao.Bag;
 import com.joaodss.tradeinwebsite.dao.Product;
 import com.joaodss.tradeinwebsite.dto.ProductDTO;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
+@Getter
 @Setter
 public class BagBuilder implements ProductBuilder {
     private Bag bag;
@@ -16,6 +18,7 @@ public class BagBuilder implements ProductBuilder {
     // -------------------- Constructor --------------------
     public BagBuilder(ProductDTO productDTO) {
         this.productDTO = productDTO;
+        reset();
     }
 
 

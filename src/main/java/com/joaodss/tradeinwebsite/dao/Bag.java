@@ -94,7 +94,7 @@ public class Bag extends Product {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Bag bag = (Bag) o;
-        return bagSize == bag.bagSize &&
+        return Objects.equals(bagSize, bag.bagSize) &&
                 Objects.equals(bagExtras, bag.bagExtras) &&
                 Objects.equals(externalFrontURL, bag.externalFrontURL) &&
                 Objects.equals(externalBackURL, bag.externalBackURL) &&

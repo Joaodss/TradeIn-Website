@@ -78,12 +78,12 @@ public abstract class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return id.equals(product.id) &&
-                tradeInRequest.equals(product.tradeInRequest) &&
-                category == product.category &&
-                brand == product.brand &&
-                model.equals(product.model) &&
-                condition == product.condition &&
+        return Objects.equals(id, product.id) &&
+                Objects.equals(tradeInRequest, product.tradeInRequest) &&
+                Objects.equals(category, product.category) &&
+                Objects.equals(brand, product.brand) &&
+                Objects.equals(model, product.model) &&
+                Objects.equals(condition, product.condition) &&
                 Objects.equals(details, product.details);
     }
 
