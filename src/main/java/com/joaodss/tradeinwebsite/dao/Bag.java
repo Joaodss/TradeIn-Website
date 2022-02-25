@@ -1,6 +1,5 @@
 package com.joaodss.tradeinwebsite.dao;
 
-import com.joaodss.tradeinwebsite.dto.BagDTO;
 import com.joaodss.tradeinwebsite.enums.BagExtra;
 import com.joaodss.tradeinwebsite.enums.BagSize;
 import lombok.*;
@@ -76,13 +75,13 @@ public class Bag extends Product {
 
     // -------------------- Custom Methods --------------------
     public void setBagSizeFrom(String size) {
-        this.bagSize = BagSize.valueOf(size);
+        this.bagSize = BagSize.valueOf(size.replace(" ", "_").toUpperCase());
     }
 
     public void setBagExtrasFrom(Set<String> extras) {
         Set<BagExtra> bagExtras = new HashSet<>();
         for (String extra : extras) {
-            bagExtras.add(BagExtra.valueOf(extra));
+            bagExtras.add(BagExtra.valueOf(extra.replace(" ", "_").toUpperCase()));
         }
         this.bagExtras = bagExtras;
     }

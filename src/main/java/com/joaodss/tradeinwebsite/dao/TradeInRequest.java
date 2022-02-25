@@ -65,11 +65,11 @@ public class TradeInRequest {
     }
 
     public void setShippingCountryFrom(String countryISOCode) {
-        this.shippingCountry = CountryCode.getByCode(countryISOCode);
+        this.shippingCountry = CountryCode.getByCodeIgnoreCase(countryISOCode);
     }
 
     public void setRequestStatusFrom(String requestStatus) {
-        this.requestStatus = RequestStatus.valueOf(requestStatus);
+        this.requestStatus = RequestStatus.valueOf(requestStatus.replace(" ", "_").toUpperCase());
     }
 
 

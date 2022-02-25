@@ -61,15 +61,15 @@ public abstract class Product {
 
     // -------------------- Custom Methods --------------------
     public void setCategoryFrom(String category) {
-        this.category = Category.valueOf(category);
+        this.category = Category.valueOf(category.replace(" ", "_").toUpperCase());
     }
 
     public void setBrandFrom(String brand) {
-        this.brand = Brand.valueOf(brand);
+        this.brand = Brand.valueOf(brand.replace(" ", "_").toUpperCase());
     }
 
     public void setConditionFrom(String condition) {
-        this.condition = Condition.valueOf(condition);
+        this.condition = Condition.valueOf(condition.replace(" ", "_").toUpperCase());
     }
 
     // -------------------- Hashcode and Equals --------------------
