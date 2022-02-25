@@ -1,6 +1,5 @@
 package com.joaodss.tradeinwebsite.dao;
 
-import com.joaodss.tradeinwebsite.datatype.Contact;
 import com.joaodss.tradeinwebsite.dto.TradeInRequestDTO;
 import com.joaodss.tradeinwebsite.enums.RequestStatus;
 import com.neovisionaries.i18n.CountryCode;
@@ -30,14 +29,17 @@ public class TradeInRequest {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "firstName", column = @Column(name = "first_name")),
-            @AttributeOverride(name = "lastName", column = @Column(name = "last_name")),
-            @AttributeOverride(name = "email", column = @Column(name = "email", nullable = false)),
-            @AttributeOverride(name = "mobileNumber", column = @Column(name = "mobile_number"))
-    })
-    private Contact contact;
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "mobile_number")
+    private String mobileNumber;
 
     @Column(name = "shipping_country", nullable = false)
     private CountryCode shippingCountry;
@@ -53,14 +55,13 @@ public class TradeInRequest {
 
     // -------------------- Custom Constructor --------------------
     public TradeInRequest(TradeInRequestDTO tradeInRequestDTO) {
-        this.setContactFrom(tradeInRequestDTO);
+        this.firstName = tradeInRequestDTO.getFirstName();
+        this.lastName = tradeInRequestDTO.getLastName();
+        this.email = tradeInRequestDTO.getEmail();
+        this.mobileNumber = tradeInRequestDTO.getMobileNumber();
         this.setShippingCountryFrom(tradeInRequestDTO.getShippingCountryISOCode());
         this.requestStatus = RequestStatus.PENDING;
 //        this.products = products;
-    }
-
-    public void setContactFrom(TradeInRequestDTO tradeInRequestDTO) {
-        this.contact = new Contact(tradeInRequestDTO);
     }
 
     public void setShippingCountryFrom(String countryISOCode) {
@@ -79,13 +80,16 @@ public class TradeInRequest {
         if (o == null || getClass() != o.getClass()) return false;
         TradeInRequest that = (TradeInRequest) o;
         return id.equals(that.id) &&
-                contact.equals(that.contact) &&
-                shippingCountry.equals(that.shippingCountry) &&
+                Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName) &&
+                email.equals(that.email) &&
+                Objects.equals(mobileNumber, that.mobileNumber) &&
+                shippingCountry == that.shippingCountry &&
                 requestStatus == that.requestStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, contact, shippingCountry, requestStatus);
+        return Objects.hash(id, firstName, lastName, email, mobileNumber, shippingCountry, requestStatus);
     }
 }
