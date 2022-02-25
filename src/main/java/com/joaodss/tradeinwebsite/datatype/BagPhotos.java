@@ -1,6 +1,6 @@
 package com.joaodss.tradeinwebsite.datatype;
 
-import com.joaodss.tradeinwebsite.dto.BagPhotosDTO;
+import com.joaodss.tradeinwebsite.dto.BagDTO;
 import lombok.*;
 
 import javax.persistence.Embeddable;
@@ -30,20 +30,20 @@ public class BagPhotos {
 
 
     // -------------------- Custom Constructor --------------------
-    public BagPhotos(BagPhotosDTO bagPhotosDTO) {
-        this.externalFrontURL = bagPhotosDTO.getExternalFrontURL();
-        this.externalBackURL = bagPhotosDTO.getExternalBackURL();
-        this.externalBottomURL = bagPhotosDTO.getExternalBottomURL();
-        this.externalLogoURL = bagPhotosDTO.getExternalLogoURL();
-        this.externalSerialURL = bagPhotosDTO.getExternalSerialURL();
-        this.externalZipperURL = bagPhotosDTO.getExternalZipperURL();
-        this.externalHardwareURL = bagPhotosDTO.getExternalHardwareURL();
-        this.internalInsideURL = bagPhotosDTO.getInternalInsideURL();
-        this.internalBottomURL = bagPhotosDTO.getInternalBottomURL();
-        this.internalLogoURL = bagPhotosDTO.getInternalLogoURL();
-        this.internalSerialURL = bagPhotosDTO.getInternalSerialURL();
-        this.internalZipperURL = bagPhotosDTO.getInternalZipperURL();
-        this.internalHardwareURL = bagPhotosDTO.getInternalHardwareURL();
+    public BagPhotos(BagDTO bagDTO) {
+        this.externalFrontURL = bagDTO.getExternalFrontURL();
+        this.externalBackURL = bagDTO.getExternalBackURL();
+        this.externalBottomURL = bagDTO.getExternalBottomURL();
+        this.externalLogoURL = bagDTO.getExternalLogoURL();
+        this.externalSerialURL = bagDTO.getExternalSerialURL();
+        this.externalZipperURL = bagDTO.getExternalZipperURL();
+        this.externalHardwareURL = bagDTO.getExternalHardwareURL();
+        this.internalInsideURL = bagDTO.getInternalInsideURL();
+        this.internalBottomURL = bagDTO.getInternalBottomURL();
+        this.internalLogoURL = bagDTO.getInternalLogoURL();
+        this.internalSerialURL = bagDTO.getInternalSerialURL();
+        this.internalZipperURL = bagDTO.getInternalZipperURL();
+        this.internalHardwareURL = bagDTO.getInternalHardwareURL();
     }
 
 }

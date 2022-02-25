@@ -17,9 +17,7 @@ public class ProductDTO {
     private String model;
     private String condition;
     private String details;
-    private String size;
-    private Set<String> extras;
-    private BagPhotosDTO bagPhotosDTO;
-    private ShoesPhotosDTO shoesPhotosDTO;
+    private BagDTO bagDTO;
+    private ShoesDTO shoesDTO;
     private List<String> blemishPhotos;
 }

@@ -1,6 +1,6 @@
 package com.joaodss.tradeinwebsite.datatype;
 
-import com.joaodss.tradeinwebsite.dto.ShoesPhotosDTO;
+import com.joaodss.tradeinwebsite.dto.ShoesDTO;
 import lombok.*;
 
 import javax.persistence.Embeddable;
@@ -28,18 +28,18 @@ public class ShoesPhotos {
 
 
     // -------------------- Custom Constructor --------------------
-    public ShoesPhotos(ShoesPhotosDTO shoesPhotosDTO) {
-        this.externalTopURL = shoesPhotosDTO.getExternalTopURL();
-        this.externalLeftSideURL = shoesPhotosDTO.getExternalLeftSideURL();
-        this.externalRightSideURL = shoesPhotosDTO.getExternalRightSideURL();
-        this.externalBottomURL = shoesPhotosDTO.getExternalBottomURL();
-        this.externalLogoURL = shoesPhotosDTO.getExternalLogoURL();
-        this.externalSerialURL = shoesPhotosDTO.getExternalSerialURL();
-        this.externalZipperURL = shoesPhotosDTO.getExternalZipperURL();
-        this.externalHardwareURL = shoesPhotosDTO.getExternalHardwareURL();
-        this.internalInsideURL = shoesPhotosDTO.getInternalInsideURL();
-        this.internalLogoURL = shoesPhotosDTO.getInternalLogoURL();
-        this.internalSerialURL = shoesPhotosDTO.getInternalSerialURL();
+    public ShoesPhotos(ShoesDTO shoesDTO) {
+        this.externalTopURL = shoesDTO.getExternalTopURL();
+        this.externalLeftSideURL = shoesDTO.getExternalLeftSideURL();
+        this.externalRightSideURL = shoesDTO.getExternalRightSideURL();
+        this.externalBottomURL = shoesDTO.getExternalBottomURL();
+        this.externalLogoURL = shoesDTO.getExternalLogoURL();
+        this.externalSerialURL = shoesDTO.getExternalSerialURL();
+        this.externalZipperURL = shoesDTO.getExternalZipperURL();
+        this.externalHardwareURL = shoesDTO.getExternalHardwareURL();
+        this.internalInsideURL = shoesDTO.getInternalInsideURL();
+        this.internalLogoURL = shoesDTO.getInternalLogoURL();
+        this.internalSerialURL = shoesDTO.getInternalSerialURL();
     }
 
 }

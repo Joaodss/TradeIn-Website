@@ -2,13 +2,18 @@ package com.joaodss.tradeinwebsite.dto;
 
 import lombok.*;
 
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
-public class BagPhotosDTO {
+public class BagDTO {
+    private String size;
+    private Set<String> extras;
+
     private String externalFrontURL;
     private String externalBackURL;
     private String externalBottomURL;

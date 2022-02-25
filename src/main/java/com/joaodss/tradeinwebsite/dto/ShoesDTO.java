@@ -8,7 +8,9 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class ShoesPhotosDTO {
+public class ShoesDTO {
+    private Short size;
+
     private String externalTopURL;
     private String externalLeftSideURL;
     private String externalRightSideURL;
