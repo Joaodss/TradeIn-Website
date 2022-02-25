@@ -1,5 +1,8 @@
-package com.joaodss.tradeinwebsite.service;
+package com.joaodss.tradeinwebsite.builder.director;
 
+import com.joaodss.tradeinwebsite.builder.builders.BagBuilder;
+import com.joaodss.tradeinwebsite.builder.builders.ProductBuilder;
+import com.joaodss.tradeinwebsite.builder.builders.ShoesBuilder;
 import com.joaodss.tradeinwebsite.dao.Product;
 import com.joaodss.tradeinwebsite.dto.ProductDTO;
 

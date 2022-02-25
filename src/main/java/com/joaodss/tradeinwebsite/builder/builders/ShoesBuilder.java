@@ -1,4 +1,4 @@
-package com.joaodss.tradeinwebsite.service;
+package com.joaodss.tradeinwebsite.builder.builders;
 
 import com.joaodss.tradeinwebsite.dao.Product;
 import com.joaodss.tradeinwebsite.dao.Shoes;
