@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -72,7 +73,18 @@ public class Bag extends Product {
     private String internalHardwareURL;
 
 
-    // -------------------- Custom Constructor --------------------
+    // -------------------- Custom Methods --------------------
+    public void setBagSizeFrom(String size) {
+        this.bagSize = BagSize.valueOf(size.replace(" ", "_").toUpperCase());
+    }
+
+    public void setBagExtrasFrom(Set<String> extras) {
+        Set<BagExtra> bagExtras = new HashSet<>();
+        for (String extra : extras) {
+            bagExtras.add(BagExtra.valueOf(extra.replace(" ", "_").toUpperCase()));
+        }
+        this.bagExtras = bagExtras;
+    }
 
 
     // -------------------- Hashcode and Equals --------------------
@@ -82,7 +94,7 @@ public class Bag extends Product {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Bag bag = (Bag) o;
-        return bagSize == bag.bagSize &&
+        return Objects.equals(bagSize, bag.bagSize) &&
                 Objects.equals(bagExtras, bag.bagExtras) &&
                 Objects.equals(externalFrontURL, bag.externalFrontURL) &&
                 Objects.equals(externalBackURL, bag.externalBackURL) &&

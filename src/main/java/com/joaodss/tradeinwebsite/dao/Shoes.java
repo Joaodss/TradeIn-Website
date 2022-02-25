@@ -57,7 +57,7 @@ public class Shoes extends Product {
     private String internalSerialURL;
 
 
-    // -------------------- Custom Constructor --------------------
+    // -------------------- Custom Methods --------------------
 
 
     // -------------------- Hashcode and Equals --------------------
@@ -67,7 +67,7 @@ public class Shoes extends Product {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Shoes shoes = (Shoes) o;
-        return shoesSize.equals(shoes.shoesSize) &&
+        return Objects.equals(shoesSize, shoes.shoesSize) &&
                 Objects.equals(externalTopURL, shoes.externalTopURL) &&
                 Objects.equals(externalLeftSideURL, shoes.externalLeftSideURL) &&
                 Objects.equals(externalRightSideURL, shoes.externalRightSideURL) &&
