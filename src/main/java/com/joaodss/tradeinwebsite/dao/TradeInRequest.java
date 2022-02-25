@@ -1,14 +1,15 @@
 package com.joaodss.tradeinwebsite.dao;
 
 import com.joaodss.tradeinwebsite.datatype.Contact;
+import com.joaodss.tradeinwebsite.dto.TradeInRequestDTO;
 import com.joaodss.tradeinwebsite.enums.RequestStatus;
+import com.neovisionaries.i18n.CountryCode;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import static javax.persistence.EnumType.STRING;
@@ -39,7 +40,7 @@ public class TradeInRequest {
     private Contact contact;
 
     @Column(name = "shipping_country", nullable = false)
-    private Locale shippingCountry;
+    private CountryCode shippingCountry;
 
     @Enumerated(STRING)
     @Column(name = "request_status", nullable = false)
@@ -51,6 +52,24 @@ public class TradeInRequest {
 
 
     // -------------------- Custom Constructor --------------------
+    public TradeInRequest(TradeInRequestDTO tradeInRequestDTO) {
+        this.setContactFrom(tradeInRequestDTO);
+        this.setShippingCountryFrom(tradeInRequestDTO.getShippingCountryISOCode());
+        this.requestStatus = RequestStatus.PENDING;
+//        this.products = products;
+    }
+
+    public void setContactFrom(TradeInRequestDTO tradeInRequestDTO) {
+        this.contact = new Contact(tradeInRequestDTO);
+    }
+
+    public void setShippingCountryFrom(String countryISOCode) {
+        this.shippingCountry = CountryCode.getByCode(countryISOCode);
+    }
+
+    public void setRequestStatusFrom(String requestStatus) {
+        this.requestStatus = RequestStatus.valueOf(requestStatus);
+    }
 
 
     // -------------------- Hashcode and Equals --------------------
