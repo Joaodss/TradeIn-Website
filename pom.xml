@@ -97,7 +97,6 @@
                             <excludes>
                                 <exclude>**/*Application.class</exclude>
                                 <exclude>**/dao/*.class</exclude>
-                                <exclude>**/datatype/*.class</exclude>
                                 <exclude>**/dto/*.class</exclude>
                             </excludes>
                             <rules>
