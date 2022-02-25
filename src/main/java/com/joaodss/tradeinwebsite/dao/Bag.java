@@ -1,11 +1,13 @@
 package com.joaodss.tradeinwebsite.dao;
 
+import com.joaodss.tradeinwebsite.dto.BagDTO;
 import com.joaodss.tradeinwebsite.enums.BagExtra;
 import com.joaodss.tradeinwebsite.enums.BagSize;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -72,7 +74,18 @@ public class Bag extends Product {
     private String internalHardwareURL;
 
 
-    // -------------------- Custom Constructor --------------------
+    // -------------------- Custom Methods --------------------
+    public void setBagSizeFrom(String size) {
+        this.bagSize = BagSize.valueOf(size);
+    }
+
+    public void setBagExtrasFrom(Set<String> extras) {
+        Set<BagExtra> bagExtras = new HashSet<>();
+        for (String extra : extras) {
+            bagExtras.add(BagExtra.valueOf(extra));
+        }
+        this.bagExtras = bagExtras;
+    }
 
 
     // -------------------- Hashcode and Equals --------------------

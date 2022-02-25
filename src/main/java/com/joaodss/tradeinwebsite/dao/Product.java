@@ -59,8 +59,18 @@ public abstract class Product {
     private List<String> blemishPhotos = new ArrayList<>();
 
 
-    // -------------------- Custom Constructor --------------------
+    // -------------------- Custom Methods --------------------
+    public void setCategoryFrom(String category) {
+        this.category = Category.valueOf(category);
+    }
 
+    public void setBrandFrom(String brand) {
+        this.brand = Brand.valueOf(brand);
+    }
+
+    public void setConditionFrom(String condition) {
+        this.condition = Condition.valueOf(condition);
+    }
 
     // -------------------- Hashcode and Equals --------------------
     @Override

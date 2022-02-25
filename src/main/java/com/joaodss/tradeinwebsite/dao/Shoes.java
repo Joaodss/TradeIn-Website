@@ -57,7 +57,7 @@ public class Shoes extends Product {
     private String internalSerialURL;
 
 
-    // -------------------- Custom Constructor --------------------
+    // -------------------- Custom Methods --------------------
 
 
     // -------------------- Hashcode and Equals --------------------
