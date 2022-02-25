@@ -46,7 +46,7 @@ class BagBuilderTest {
 
     @Test
     @Order(1)
-    void buildFrom_productDTO_usesInternMethods() {
+    void testBuildFrom_productDTO_usesInternMethods() {
         bagBuilder.buildFrom(productDTO);
         verify(bagBuilder).buildFrom(productDTO);
 
