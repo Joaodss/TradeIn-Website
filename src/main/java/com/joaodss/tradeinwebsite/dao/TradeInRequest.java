@@ -84,7 +84,7 @@ public class TradeInRequest {
         this.requestStatus = RequestStatus.valueOf(requestStatus.replace(" ", "_").toUpperCase());
     }
 
-    public void addProduct(Product product){
+    public void addProduct(Product product) {
         product.setTradeInRequest(this);
         products.add(product);
     }
