@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static javax.persistence.CascadeType.*;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -49,7 +50,7 @@ public class TradeInRequest {
     private RequestStatus requestStatus;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "tradeInRequest")
+    @OneToMany(mappedBy = "tradeInRequest", cascade = {PERSIST, MERGE, REMOVE}, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
 
 
