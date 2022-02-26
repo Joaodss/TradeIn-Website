@@ -1,10 +1,11 @@
-package com.joaodss.tradeinwebsite.utils;
+package com.joaodss.tradeinwebsite.databaseutils;
 
 import com.joaodss.tradeinwebsite.dao.Bag;
 import com.joaodss.tradeinwebsite.dao.Product;
 import com.joaodss.tradeinwebsite.dao.Shoes;
 import com.joaodss.tradeinwebsite.dao.TradeInRequest;
 import com.joaodss.tradeinwebsite.repository.TradeInRequestRepository;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,13 +32,10 @@ import static org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 @SpringBootTest
 @ActiveProfiles("test")
 @TestMethodOrder(OrderAnnotation.class)
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class DbResetUtilTest {
-
-    @Autowired
-    private ApplicationContext applicationContext;
-
-    @Autowired
-    private TradeInRequestRepository tradeInRequestRepository;
+    private final ApplicationContext applicationContext;
+    private final TradeInRequestRepository tradeInRequestRepository;
 
 
     private Product bag;

@@ -1,4 +1,4 @@
-package com.joaodss.tradeinwebsite.utils;
+package com.joaodss.tradeinwebsite.databaseutils;
 
 import lombok.NoArgsConstructor;
 import org.springframework.context.ApplicationContext;
