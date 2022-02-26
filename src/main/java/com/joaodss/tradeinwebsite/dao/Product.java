@@ -59,6 +59,24 @@ public abstract class Product {
     private List<String> blemishPhotos = new ArrayList<>();
 
 
+    // -------------------- Custom Constructor --------------------
+    public Product(
+            Category category,
+            Brand brand,
+            String model,
+            Condition condition,
+            String details,
+            List<String> blemishPhotos
+    ) {
+        this.category = category;
+        this.brand = brand;
+        this.model = model;
+        this.condition = condition;
+        this.details = details;
+        this.blemishPhotos = blemishPhotos;
+    }
+
+
     // -------------------- Custom Methods --------------------
     public void setCategoryFrom(String category) {
         this.category = Category.valueOf(category.replace(" ", "_").toUpperCase());

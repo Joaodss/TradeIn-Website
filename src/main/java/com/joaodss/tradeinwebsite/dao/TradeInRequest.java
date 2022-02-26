@@ -55,6 +55,15 @@ public class TradeInRequest {
 
 
     // -------------------- Custom Constructor --------------------
+    public TradeInRequest(String firstName, String lastName, String email, String mobileNumber, CountryCode shippingCountry, RequestStatus requestStatus) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.mobileNumber = mobileNumber;
+        this.shippingCountry = shippingCountry;
+        this.requestStatus = requestStatus;
+    }
+
     public TradeInRequest(TradeInRequestDTO tradeInRequestDTO) {
         this.firstName = tradeInRequestDTO.getFirstName();
         this.lastName = tradeInRequestDTO.getLastName();
@@ -65,12 +74,19 @@ public class TradeInRequest {
 //        this.products = products;
     }
 
+
+    // -------------------- Custom Methods --------------------
     public void setShippingCountryFrom(String countryISOCode) {
         this.shippingCountry = CountryCode.getByCodeIgnoreCase(countryISOCode);
     }
 
     public void setRequestStatusFrom(String requestStatus) {
         this.requestStatus = RequestStatus.valueOf(requestStatus.replace(" ", "_").toUpperCase());
+    }
+
+    public void addProduct(Product product){
+        product.setTradeInRequest(this);
+        products.add(product);
     }
 
 

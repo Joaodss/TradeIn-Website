@@ -1,12 +1,12 @@
 package com.joaodss.tradeinwebsite.dao;
 
-import com.joaodss.tradeinwebsite.enums.BagExtra;
-import com.joaodss.tradeinwebsite.enums.BagSize;
+import com.joaodss.tradeinwebsite.enums.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -71,6 +71,23 @@ public class Bag extends Product {
 
     @Column(name = "internal_hardware_photo_URL")
     private String internalHardwareURL;
+
+
+    // -------------------- Custom Constructor --------------------
+    public Bag(
+            Category category,
+            Brand brand,
+            String model,
+            Condition condition,
+            String details,
+            List<String> blemishPhotos,
+            BagSize bagSize,
+            Set<BagExtra> bagExtras
+    ) {
+        super(category, brand, model, condition, details, blemishPhotos);
+        this.bagSize = bagSize;
+        this.bagExtras = bagExtras;
+    }
 
 
     // -------------------- Custom Methods --------------------
