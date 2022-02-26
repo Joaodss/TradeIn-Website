@@ -33,9 +33,10 @@ import static org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 @ActiveProfiles("test")
 @TestMethodOrder(OrderAnnotation.class)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class TradeInRequestRepositoryTest {
+class ProductRepositoryTest {
     private final ApplicationContext applicationContext;
     private final TradeInRequestRepository tradeInRequestRepository;
+    private final ProductRepository productRepository;
 
     private Product bag;
     private Product shoes;
@@ -116,6 +117,7 @@ class TradeInRequestRepositoryTest {
     @AfterEach
     void tearDown() throws SQLException {
         tradeInRequestRepository.deleteAll();
+        productRepository.deleteAll();
         DbResetUtil.resetAutoIncrementColumns(applicationContext, "trade_in_request", "product");
     }
 
@@ -123,79 +125,148 @@ class TradeInRequestRepositoryTest {
     // ------------------------------ CRUD TESTING ------------------------------
     @Test
     @Order(1)
-    void testCount_numberOfTradeInRequestsInDatabase_correctAmount() {
-        assertEquals(2, tradeInRequestRepository.count());
+    void testCount_numberOfProductsInDatabase_correctAmount() {
+        assertEquals(2, productRepository.count());
     }
 
     // -------------------- Create --------------------
     @Test
     @Order(2)
-    void testCreateTradeInRequest_saveNewTradeInRequests_storedInRepository() {
-        long initialSize = tradeInRequestRepository.count();
+    void testCreateProduct_saveNewTradeInRequestWithNewProduct_PersistProduct_storedInRepository() {
+        long initialSize = productRepository.count();
 
         newTradeInRequest.addProduct(newBag);
+        tradeInRequestRepository.save(newTradeInRequest);
+
+        assertEquals(initialSize + 1, productRepository.count());
+    }
+
+    @Test
+    @Order(2)
+    void testCreateProduct_saveExistingTradeInRequestsWithNewProduct_storedInRepository() {
+        newTradeInRequest.addProduct(newBag);
+        tradeInRequestRepository.save(newTradeInRequest);
+        long initialSize = productRepository.count();
+
         newTradeInRequest.addProduct(newShoes);
         tradeInRequestRepository.save(newTradeInRequest);
 
-        assertEquals(initialSize + 1, tradeInRequestRepository.count());
+        assertEquals(initialSize + 1, productRepository.count());
+        assertEquals(2, newTradeInRequest.getProducts().size());
     }
 
     // -------------------- Read --------------------
     @Test
     @Order(3)
-    void testReadTradeInRequest_findAll_returnsListOfObjectsNotEmpty() {
-        List<TradeInRequest> allElements = tradeInRequestRepository.findAll();
+    void testReadProduct_findAll_returnsListOfObjectsNotEmpty() {
+        List<Product> allElements = productRepository.findAll();
         assertFalse(allElements.isEmpty());
     }
 
     @Test
     @Order(3)
-    void testReadTradeInRequest_findById_validId_returnsObjectsWithCorrectValue() {
-        TradeInRequest element = tradeInRequestRepository.findById(2L)
+    void testReadProduct_findById_validId_returnCorrectObject() {
+        Product element = productRepository.findById(2L)
                 .orElseThrow(() -> new RuntimeException("Element not found"));
-        assertEquals(tradeInRequest2, element);
+        assertEquals(shoes, element);
     }
 
     @Test
     @Order(3)
-    void testReadTradeInRequest_findById_invalidId_returnsEmpty() {
-        Optional<TradeInRequest> element = tradeInRequestRepository.findById(9999L);
+    void testReadProduct_findById_invalidId_returnEmpty() {
+        Optional<Product> element = productRepository.findById(9999L);
         assertTrue(element.isEmpty());
+    }
+
+    // -------------------- Read from Parent --------------------
+    @Test
+    @Order(3)
+    void testReadProduct_byParentIdJoined_returnCorrectObject() {
+        TradeInRequest element = tradeInRequestRepository.findByIdJoined(2L)
+                .orElseThrow(() -> new RuntimeException("Element not found"));
+        assertEquals(List.of(shoes), element.getProducts());
     }
 
     // -------------------- Update --------------------
     @Test
     @Order(4)
-    void testUpdateTradeInRequest_changeName_newNameEqualsDefinedValue() {
-        TradeInRequest element = tradeInRequestRepository.findById(1L)
+    void testUpdateProduct_changeDescription_newDescriptionEqualsDefinedValue() {
+        Product element = productRepository.findById(1L)
                 .orElseThrow(() -> new RuntimeException("Element not found"));
 
-        assertNotEquals("Arthur", element.getFirstName());
-        assertNotEquals("Smith", element.getLastName());
-        element.setFirstName("Arthur");
-        element.setLastName("Smith");
-        tradeInRequestRepository.save(element);
+        assertNotEquals("New details", element.getDetails());
+        element.setDetails("New details");
+        productRepository.save(element);
 
-        TradeInRequest updatedElement = tradeInRequestRepository.findById(1L)
+        Product updatedElement = productRepository.findById(1L)
                 .orElseThrow(() -> new RuntimeException("Element not found"));
-        assertEquals("Arthur", updatedElement.getFirstName());
-        assertEquals("Smith", updatedElement.getLastName());
+        assertEquals("New details", updatedElement.getDetails());
+    }
+
+    // -------------------- Update from Parent --------------------
+    @Test
+    @Order(4)
+    void testUpdateProduct_fromParent_changeDescription_newDescriptionEqualsDefinedValue() {
+        Product element = productRepository.findById(1L)
+                .orElseThrow(() -> new RuntimeException("Element not found"));
+
+        assertNotEquals("New details", element.getDetails());
+        element.setDetails("New details");
+
+        TradeInRequest parentElement = tradeInRequestRepository.findByIdJoined(element.getTradeInRequest().getId())
+                .orElseThrow(() -> new RuntimeException("Parent Element not found"));
+        parentElement.updateProduct(element);
+        tradeInRequestRepository.save(parentElement);
+
+        Product updatedElement = productRepository.findById(1L)
+                .orElseThrow(() -> new RuntimeException("Element not found"));
+        assertEquals("New details", updatedElement.getDetails());
     }
 
     // -------------------- Delete --------------------
     @Test
     @Order(5)
-    void testDeleteTradeInRequest_validId_deletedFromRepository() {
-        long initialSize = tradeInRequestRepository.count();
+    void testDeleteProduct_validId_deletedFromRepository() {
+        long initialSize = productRepository.count();
 
-        tradeInRequestRepository.deleteById(2L);
+        productRepository.deleteById(2L);
+
+        assertEquals(initialSize - 1, productRepository.count());
+    }
+
+    @Test
+    @Order(5)
+    void testDeleteProduct_invalidId_deletedFromRepository() {
+        assertThrows(Exception.class, () -> productRepository.deleteById(9999L));
+    }
+
+    // -------------------- Delete from Parent --------------------
+    @Test
+    @Order(5)
+    void testDeleteProduct_fromParent_deletedFromRepository() {
+        Product element = productRepository.findById(2L)
+                .orElseThrow(() -> new RuntimeException("Element not found"));
+        TradeInRequest parentElement = tradeInRequestRepository.findByIdJoined(element.getTradeInRequest().getId())
+                .orElseThrow(() -> new RuntimeException("Parent Element not found"));
+        parentElement.addProduct(newBag);
+        tradeInRequestRepository.save(parentElement);
+
+        long initialSize = productRepository.count();
+
+        parentElement.removeProduct(element);
+        tradeInRequestRepository.save(parentElement);
 
         assertEquals(initialSize - 1, tradeInRequestRepository.count());
     }
 
     @Test
     @Order(5)
-    void testDeleteTradeInRequest_invalidId_deletedFromRepository() {
-        assertThrows(Exception.class, () -> tradeInRequestRepository.deleteById(9999L));
+    void testDeleteProduct_fromParent_lastProduct_throwException() {
+        Product element = productRepository.findById(2L)
+                .orElseThrow(() -> new RuntimeException("Element not found"));
+        TradeInRequest parentElement = tradeInRequestRepository.findByIdJoined(element.getTradeInRequest().getId())
+                .orElseThrow(() -> new RuntimeException("Parent Element not found"));
+
+        assertThrows(IllegalStateException.class, () -> parentElement.removeProduct(element));
     }
 }

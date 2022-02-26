@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Table(name = "bag")
@@ -28,7 +29,7 @@ public class Bag extends Product {
     private BagSize bagSize;
 
     @Enumerated(STRING)
-    @ElementCollection(targetClass = BagExtra.class)
+    @ElementCollection(targetClass = BagExtra.class, fetch = EAGER)
     @CollectionTable(name = "bag_extra")
     @Column(name = "extra")
     private Set<BagExtra> bagExtras;

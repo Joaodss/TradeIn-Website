@@ -89,6 +89,20 @@ public class TradeInRequest {
         products.add(product);
     }
 
+    public void updateProduct(Product product) {
+        product.setTradeInRequest(this);
+        for (int i = 0; i < products.size(); i++) {
+            if (Objects.equals(products.get(i).getId(), product.getId()) || Objects.equals(products.get(i), product))
+                products.set(i, product);
+        }
+    }
+
+    public void removeProduct(Product product) {
+        if (products.size() > 1)
+            products.remove(product);
+        else throw new IllegalStateException("TradeInRequest must have at least 1 Product element");
+    }
+
 
     // -------------------- Hashcode and Equals --------------------
     @Override
