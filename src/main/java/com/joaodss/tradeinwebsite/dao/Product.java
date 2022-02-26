@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.IDENTITY;
 import static javax.persistence.InheritanceType.JOINED;
 
@@ -53,10 +55,28 @@ public abstract class Product {
     @Column(name = "details")
     private String details;
 
-    @ElementCollection(targetClass = String.class)
+    @ElementCollection(targetClass = String.class, fetch = EAGER)
     @CollectionTable(name = "blemish_photos")
     @Column(name = "photo_url")
     private List<String> blemishPhotos = new ArrayList<>();
+
+
+    // -------------------- Custom Constructor --------------------
+    public Product(
+            Category category,
+            Brand brand,
+            String model,
+            Condition condition,
+            String details,
+            List<String> blemishPhotos
+    ) {
+        this.category = category;
+        this.brand = brand;
+        this.model = model;
+        this.condition = condition;
+        this.details = details;
+        this.blemishPhotos = blemishPhotos;
+    }
 
 
     // -------------------- Custom Methods --------------------

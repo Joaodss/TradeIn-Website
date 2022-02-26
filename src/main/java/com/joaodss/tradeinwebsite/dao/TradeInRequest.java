@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static javax.persistence.CascadeType.*;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -49,11 +50,20 @@ public class TradeInRequest {
     private RequestStatus requestStatus;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "tradeInRequest")
+    @OneToMany(mappedBy = "tradeInRequest", cascade = {PERSIST, MERGE, REMOVE}, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
 
 
     // -------------------- Custom Constructor --------------------
+    public TradeInRequest(String firstName, String lastName, String email, String mobileNumber, CountryCode shippingCountry, RequestStatus requestStatus) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.mobileNumber = mobileNumber;
+        this.shippingCountry = shippingCountry;
+        this.requestStatus = requestStatus;
+    }
+
     public TradeInRequest(TradeInRequestDTO tradeInRequestDTO) {
         this.firstName = tradeInRequestDTO.getFirstName();
         this.lastName = tradeInRequestDTO.getLastName();
@@ -64,12 +74,33 @@ public class TradeInRequest {
 //        this.products = products;
     }
 
+
+    // -------------------- Custom Methods --------------------
     public void setShippingCountryFrom(String countryISOCode) {
         this.shippingCountry = CountryCode.getByCodeIgnoreCase(countryISOCode);
     }
 
     public void setRequestStatusFrom(String requestStatus) {
         this.requestStatus = RequestStatus.valueOf(requestStatus.replace(" ", "_").toUpperCase());
+    }
+
+    public void addProduct(Product product) {
+        product.setTradeInRequest(this);
+        products.add(product);
+    }
+
+    public void updateProduct(Product product) {
+        product.setTradeInRequest(this);
+        for (int i = 0; i < products.size(); i++) {
+            if (Objects.equals(products.get(i).getId(), product.getId()) || Objects.equals(products.get(i), product))
+                products.set(i, product);
+        }
+    }
+
+    public void removeProduct(Product product) {
+        if (products.size() > 1)
+            products.remove(product);
+        else throw new IllegalStateException("TradeInRequest must have at least 1 Product element");
     }
 
 

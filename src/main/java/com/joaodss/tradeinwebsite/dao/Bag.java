@@ -1,16 +1,17 @@
 package com.joaodss.tradeinwebsite.dao;
 
-import com.joaodss.tradeinwebsite.enums.BagExtra;
-import com.joaodss.tradeinwebsite.enums.BagSize;
+import com.joaodss.tradeinwebsite.enums.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Table(name = "bag")
@@ -28,7 +29,7 @@ public class Bag extends Product {
     private BagSize bagSize;
 
     @Enumerated(STRING)
-    @ElementCollection(targetClass = BagExtra.class)
+    @ElementCollection(targetClass = BagExtra.class, fetch = EAGER)
     @CollectionTable(name = "bag_extra")
     @Column(name = "extra")
     private Set<BagExtra> bagExtras;
@@ -71,6 +72,23 @@ public class Bag extends Product {
 
     @Column(name = "internal_hardware_photo_URL")
     private String internalHardwareURL;
+
+
+    // -------------------- Custom Constructor --------------------
+    public Bag(
+            Category category,
+            Brand brand,
+            String model,
+            Condition condition,
+            String details,
+            List<String> blemishPhotos,
+            BagSize bagSize,
+            Set<BagExtra> bagExtras
+    ) {
+        super(category, brand, model, condition, details, blemishPhotos);
+        this.bagSize = bagSize;
+        this.bagExtras = bagExtras;
+    }
 
 
     // -------------------- Custom Methods --------------------

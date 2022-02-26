@@ -1,5 +1,8 @@
 package com.joaodss.tradeinwebsite.dao;
 
+import com.joaodss.tradeinwebsite.enums.Brand;
+import com.joaodss.tradeinwebsite.enums.Category;
+import com.joaodss.tradeinwebsite.enums.Condition;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -7,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -55,6 +59,21 @@ public class Shoes extends Product {
 
     @Column(name = "internal_serial_photo_URL")
     private String internalSerialURL;
+
+
+    // -------------------- Custom Constructor --------------------
+    public Shoes(
+            Category category,
+            Brand brand,
+            String model,
+            Condition condition,
+            String details,
+            List<String> blemishPhotos,
+            Short shoesSize
+    ) {
+        super(category, brand, model, condition, details, blemishPhotos);
+        this.shoesSize = shoesSize;
+    }
 
 
     // -------------------- Custom Methods --------------------
