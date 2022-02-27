@@ -193,10 +193,25 @@ class TradeInRequestRepositoryTest {
     // -------------------- Read with Product --------------------
     @Test
     @Order(5)
+    void testReadTradeInRequest_AllJoined_returnObjectsWithChild() {
+        List<TradeInRequest> elements = tradeInRequestRepository.findAllJoined();
+        assertEquals(List.of(bag), elements.get(0).getProducts());
+        assertEquals(List.of(shoes), elements.get(1).getProducts());
+    }
+
+    @Test
+    @Order(5)
     void testReadTradeInRequest_byParentIdJoined_returnObjectWithChild() {
         TradeInRequest element = tradeInRequestRepository.findByIdJoined(2L)
                 .orElseThrow(() -> new RuntimeException("Element not found"));
         assertEquals(List.of(shoes), element.getProducts());
+    }
+
+    @Test
+    @Order(5)
+    void testReadTradeInRequest_byParentEmailJoined_returnObjectWithChild() {
+        List<TradeInRequest> elements = tradeInRequestRepository.findByEmailJoined("john.doe@email.com");
+        assertEquals(List.of(bag), elements.get(0).getProducts());
     }
 
     // -------------------- Update --------------------
