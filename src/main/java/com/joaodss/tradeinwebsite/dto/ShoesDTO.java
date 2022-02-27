@@ -1,5 +1,7 @@
 package com.joaodss.tradeinwebsite.dto;
 
+import com.joaodss.tradeinwebsite.dao.Product;
+import com.joaodss.tradeinwebsite.dao.Shoes;
 import lombok.*;
 
 @AllArgsConstructor
@@ -22,4 +24,12 @@ public class ShoesDTO {
 //    private String internalInsideURL;
 //    private String internalLogoURL;
 //    private String internalSerialURL;
+
+
+    public ShoesDTO(Product product) {
+        if (product.getClass().equals(Shoes.class)) {
+            this.size = ((Shoes) product).getShoesSize();
+        }
+    }
+
 }

@@ -1,6 +1,6 @@
 package com.joaodss.tradeinwebsite.dto;
 
-import com.joaodss.tradeinwebsite.dao.TradeInRequest;
+import com.joaodss.tradeinwebsite.dao.Product;
 import com.joaodss.tradeinwebsite.enums.Brand;
 import com.joaodss.tradeinwebsite.enums.Category;
 import com.joaodss.tradeinwebsite.enums.Condition;
@@ -17,12 +17,40 @@ import java.util.List;
 @ToString
 public class ResponseProductDTO {
     private Long id;
-    private TradeInRequest tradeInRequest;
-    private Category category;
-    private Brand brand;
+    private String category;
+    private String brand;
     private String model;
-    private Condition condition;
+    private String condition;
     private String details;
+    private BagDTO bagDTO;
+    private ShoesDTO shoesDTO;
     private List<String> blemishPhotos;
+
+
+    // -------------------- Custom Constructor --------------------
+    public ResponseProductDTO(Product product) {
+        this.id = product.getId();
+        setCategory(product.getCategory());
+        setBrand(product.getBrand());
+        this.model = product.getModel();
+        setCondition(product.getCondition());
+        this.details = product.getDetails();
+        this.bagDTO = new BagDTO(product);
+        this.shoesDTO = new ShoesDTO(product);
+        this.blemishPhotos = product.getBlemishPhotos();
+    }
+
+
+    public void setCategory(Category category) {
+        this.category = category.toString();
+    }
+
+    private void setBrand(Brand brand) {
+        this.brand = brand.toString();
+    }
+
+    private void setCondition(Condition condition) {
+        this.condition = condition.toString();
+    }
 
 }
