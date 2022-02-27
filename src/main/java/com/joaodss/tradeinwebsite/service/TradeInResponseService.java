@@ -1,18 +1,20 @@
 package com.joaodss.tradeinwebsite.service;
 
 import com.joaodss.tradeinwebsite.dto.ResponseTradeInRequestDTO;
+import com.joaodss.tradeinwebsite.dto.TradeInRequestDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface TradeInResponseService {
 
     List<ResponseTradeInRequestDTO> getAll();
 
-    Optional<ResponseTradeInRequestDTO> getById();
+    List<ResponseTradeInRequestDTO> getByEmail(String email);
 
-    ResponseTradeInRequestDTO create();
+    ResponseTradeInRequestDTO getById(long id);
 
-    ResponseTradeInRequestDTO delete();
+    ResponseTradeInRequestDTO create(TradeInRequestDTO tradeInRequestDTO);
+
+    ResponseTradeInRequestDTO delete(long id);
 
 }
