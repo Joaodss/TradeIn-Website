@@ -76,10 +76,8 @@ public class Shoes extends Product {
     }
 
 
-    // -------------------- Custom Methods --------------------
-
-
     // -------------------- Hashcode and Equals --------------------
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -100,6 +98,7 @@ public class Shoes extends Product {
                 Objects.equals(internalSerialURL, shoes.internalSerialURL);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(

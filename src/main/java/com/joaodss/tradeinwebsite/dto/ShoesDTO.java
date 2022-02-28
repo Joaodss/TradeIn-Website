@@ -26,6 +26,7 @@ public class ShoesDTO {
 //    private String internalSerialURL;
 
 
+    // -------------------- Custom Constructor --------------------
     public ShoesDTO(Product product) {
         if (product.getClass().equals(Shoes.class)) {
             this.size = ((Shoes) product).getShoesSize();

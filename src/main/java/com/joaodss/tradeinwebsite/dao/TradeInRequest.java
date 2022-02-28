@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.joaodss.tradeinwebsite.enums.RequestStatus.PENDING;
+import static com.joaodss.tradeinwebsite.utils.EnumsUtil.enumFormat;
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -72,7 +74,7 @@ public class TradeInRequest {
         this.email = tradeInRequestDTO.getEmail();
         this.mobileNumber = tradeInRequestDTO.getMobileNumber();
         setShippingCountryFrom(tradeInRequestDTO.getShippingCountryISOCode());
-        this.requestStatus = RequestStatus.PENDING;
+        this.requestStatus = PENDING;
         setNewProducts(tradeInRequestDTO.getProducts());
     }
 
@@ -83,7 +85,7 @@ public class TradeInRequest {
     }
 
     public void setRequestStatusFrom(String requestStatus) {
-        this.requestStatus = RequestStatus.valueOf(requestStatus.replace(" ", "_").toUpperCase());
+        this.requestStatus = RequestStatus.valueOf(enumFormat(requestStatus));
     }
 
     public void setNewProducts(List<ProductDTO> productDTOList) {
@@ -116,11 +118,13 @@ public class TradeInRequest {
     public void removeProduct(Product product) {
         if (this.products.size() > 1)
             this.products.remove(product);
-        else throw new IllegalStateException("TradeInRequest must have at least 1 Product element");
+        else
+            throw new IllegalStateException("TradeInRequest must have at least 1 Product element");
     }
 
 
     // -------------------- Hashcode and Equals --------------------
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -135,6 +139,7 @@ public class TradeInRequest {
                 Objects.equals(requestStatus, that.requestStatus);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, email, mobileNumber, shippingCountry, requestStatus);

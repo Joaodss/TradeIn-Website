@@ -1,5 +1,6 @@
 package com.joaodss.tradeinwebsite.dto;
 
+import com.joaodss.tradeinwebsite.dao.Product;
 import com.joaodss.tradeinwebsite.dao.TradeInRequest;
 import com.joaodss.tradeinwebsite.enums.RequestStatus;
 import com.neovisionaries.i18n.CountryCode;
@@ -24,6 +25,8 @@ public class ResponseTradeInRequestDTO {
     private String requestStatus;
     private List<ResponseProductDTO> products;
 
+
+    // -------------------- Custom Constructor --------------------
     public ResponseTradeInRequestDTO(TradeInRequest tradeInRequest) {
         this.id = tradeInRequest.getId();
         this.firstName = tradeInRequest.getFirstName();
@@ -32,11 +35,11 @@ public class ResponseTradeInRequestDTO {
         this.mobileNumber = tradeInRequest.getMobileNumber();
         setShippingCountry(tradeInRequest.getShippingCountry());
         setRequestStatus(tradeInRequest.getRequestStatus());
-        this.products = tradeInRequest.getProducts().stream()
-                .map(ResponseProductDTO::new)
-                .collect(Collectors.toList());
+        setProducts(tradeInRequest.getProducts());
     }
 
+
+    // -------------------- Custom Methods --------------------
     private void setShippingCountry(CountryCode countryCode) {
         this.shippingCountry = countryCode.toString();
     }
@@ -45,5 +48,10 @@ public class ResponseTradeInRequestDTO {
         this.requestStatus = requestStatus.toString();
     }
 
+    private void setProducts(List<Product> productList) {
+        this.products = productList.stream()
+                .map(ResponseProductDTO::new)
+                .collect(Collectors.toList());
+    }
 
 }

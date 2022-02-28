@@ -34,6 +34,7 @@ public class BagDTO {
 //    private String internalHardwareURL;
 
 
+    // -------------------- Custom Constructor --------------------
     public BagDTO(Product product) {
         if (product.getClass().equals(Bag.class)) {
             setSize(((Bag) product).getBagSize());
@@ -42,13 +43,14 @@ public class BagDTO {
     }
 
 
+    // -------------------- Custom Methods --------------------
     public void setSize(BagSize size) {
         this.size = size.toString();
     }
 
     public void setExtras(Set<BagExtra> extras) {
         this.extras = extras.stream()
-                .map(Enum::name)
+                .map(Enum::toString)
                 .collect(Collectors.toSet());
     }
 

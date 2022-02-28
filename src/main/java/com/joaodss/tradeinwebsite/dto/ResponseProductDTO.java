@@ -41,6 +41,7 @@ public class ResponseProductDTO {
     }
 
 
+    // -------------------- Custom Methods --------------------
     public void setCategory(Category category) {
         this.category = category.toString();
     }
