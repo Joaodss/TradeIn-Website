@@ -169,7 +169,9 @@ class TradeInResponseServiceTest {
         assertThrows(NoSuchElementException.class, () -> service.getById(anyLong()));
     }
 
+    //TODO: refactor testing and more testing
     @Test
+    @Order(4)
     void testCreate_useTradeInRequestRepositoryCreate_useGetById() {
         when(repository.save(any(TradeInRequest.class)))
                 .thenReturn(tradeInRequest2);
@@ -184,7 +186,9 @@ class TradeInResponseServiceTest {
         verifyNoMoreInteractions(repository);
     }
 
+    //TODO: refactor testing and more testing
     @Test
+    @Order(5)
     void testDelete_useTradeInRequestRepositoryDelete_useGetById() {
         when(repository.findByIdJoined(anyLong()))
                 .thenReturn(Optional.of(tradeInRequest1));
