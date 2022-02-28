@@ -5,12 +5,10 @@ import com.joaodss.tradeinwebsite.dto.TradeInRequestDTO;
 import com.joaodss.tradeinwebsite.service.TradeInResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -53,7 +51,6 @@ public class TradeInRequestControllerImpl implements TradeInRequestController {
     // ------------------------------ Get by Id ------------------------------
     @GetMapping("/{id}")
     @ResponseStatus(OK)
-
     public ResponseTradeInRequestDTO getTradeInRequestById(@PathVariable("id") long id) {
         try {
             log.info("Getting trade in request by id");
@@ -68,9 +65,22 @@ public class TradeInRequestControllerImpl implements TradeInRequestController {
     }
 
     // ------------------------------ Create ------------------------------
-    @Override
-    public ResponseTradeInRequestDTO createTradeInRequests(TradeInRequestDTO tradeInRequestDTO) {
-        return null;
+    @PostMapping
+    @ResponseStatus(CREATED)
+    public ResponseTradeInRequestDTO createTradeInRequests(@RequestBody @Valid TradeInRequestDTO tradeInRequestDTO) {
+        try {
+            log.info("Creating trade in request");
+            return service.create(tradeInRequestDTO);
+        } catch (NoSuchElementException e1) {
+            log.error("Trade in request created not found. Error: {} ", e1.getMessage());
+            throw new ResponseStatusException(NOT_FOUND, "Error fetching created trade in request.");
+        } catch (IllegalArgumentException e2) {
+            log.error("Invalid trade in request. Error: {} ", e2.getMessage());
+            throw new ResponseStatusException(BAD_REQUEST, "Invalid trade in request.");
+        } catch (Exception e) {
+            log.error("Something went wrong: {}", e.getMessage());
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, "Something went wrong.");
+        }
     }
 
     // ------------------------------ Delete by Id ------------------------------

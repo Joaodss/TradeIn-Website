@@ -1,17 +1,20 @@
 package com.joaodss.tradeinwebsite.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joaodss.tradeinwebsite.dao.Bag;
 import com.joaodss.tradeinwebsite.dao.Product;
 import com.joaodss.tradeinwebsite.dao.Shoes;
 import com.joaodss.tradeinwebsite.dao.TradeInRequest;
 import com.joaodss.tradeinwebsite.databaseutils.DbResetUtil;
-import com.joaodss.tradeinwebsite.dto.ResponseTradeInRequestDTO;
+import com.joaodss.tradeinwebsite.dto.*;
 import com.joaodss.tradeinwebsite.repository.ProductRepository;
 import com.joaodss.tradeinwebsite.repository.TradeInRequestRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
@@ -35,10 +38,13 @@ import static com.joaodss.tradeinwebsite.enums.Category.SHOES;
 import static com.joaodss.tradeinwebsite.enums.Condition.GOOD;
 import static com.joaodss.tradeinwebsite.enums.Condition.USED;
 import static com.joaodss.tradeinwebsite.enums.RequestStatus.PENDING;
-import static com.neovisionaries.i18n.CountryCode.*;
+import static com.neovisionaries.i18n.CountryCode.PT;
+import static com.neovisionaries.i18n.CountryCode.US;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -51,7 +57,6 @@ class TradeInRequestControllerIntegrationTest {
     private final WebApplicationContext webApplicationContext;
     private final TradeInRequestRepository tradeInRequestRepository;
     private final ProductRepository productRepository;
-    private final TradeInRequestController tradeInRequestController;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final String baseUrl = "/api/v1/trade-in-request";
 
@@ -61,14 +66,6 @@ class TradeInRequestControllerIntegrationTest {
     private Product shoes;
     private TradeInRequest tradeInRequest1;
     private TradeInRequest tradeInRequest2;
-    private TradeInRequest newTradeInRequest = new TradeInRequest(
-            "Maria",
-            "Doe",
-            "maria.doe@email.com",
-            "9999999999",
-            ES,
-            PENDING
-    );
     private Product newBag = new Bag(
             BAG,
             GUCCI,
@@ -88,9 +85,46 @@ class TradeInRequestControllerIntegrationTest {
             List.of("One photo", "Two photos", "Three photos"),
             (short) 36
     );
+    private TradeInRequestDTO newTradeInRequestDTO = new TradeInRequestDTO(
+            "Jason",
+            "Doe",
+            "jasson.doe@email.com",
+            "999888777",
+            "UK",
+            List.of(
+                    new ProductDTO(
+                            "Bag",
+                            "Chanel",
+                            "New Fancy Bag",
+                            "Very good",
+                            "A new bag in very good conditions",
+                            new BagDTO(
+                                    "Medium",
+                                    Set.of("Mirror", "name tag")
+                            ),
+                            null,
+                            List.of("defect1", "defect2")
+                    ),
+                    new ProductDTO(
+                            "Shoes",
+                            "Louis Vuitton",
+                            "New Fancy Shoes",
+                            "Good",
+                            "Used shoes in good conditions",
+                            null,
+                            new ShoesDTO(
+                                    (short) 35
+                            ),
+                            List.of("defect1", "defect2", "defect3")
+                    )
+            )
+
+    );
+    String tradeInRequestDTOBody;
+
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws JsonProcessingException {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
         tradeInRequest1 = new TradeInRequest(
@@ -132,6 +166,8 @@ class TradeInRequestControllerIntegrationTest {
         );
         tradeInRequest2.addProduct(shoes);
         tradeInRequestRepository.saveAll(List.of(tradeInRequest1, tradeInRequest2));
+
+        tradeInRequestDTOBody = objectMapper.writeValueAsString(newTradeInRequestDTO);
     }
 
     @AfterEach
@@ -312,7 +348,86 @@ class TradeInRequestControllerIntegrationTest {
 
     // ------------------------------ CREATE ------------------------------
     @Test
-    void createTradeInRequests() {
+    @Order(4)
+    void testCreateTradeInRequests_validBody_returnOkResponseStatus() throws Exception {
+        mockMvc.perform(
+                        post(baseUrl)
+                                .content(tradeInRequestDTOBody)
+                                .contentType(APPLICATION_JSON)
+                )
+                .andExpect(status().isCreated())
+                .andReturn();
+    }
+
+    @Test
+    @Order(4)
+    void testCreateTradeInRequests_validBody_returnCreatedObject() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                        post(baseUrl)
+                                .content(tradeInRequestDTOBody)
+                                .contentType(APPLICATION_JSON)
+                )
+                .andExpectAll(
+                        jsonPath("$.firstName", is(newTradeInRequestDTO.getFirstName())),
+                        jsonPath("$.email", is(newTradeInRequestDTO.getEmail())),
+                        jsonPath("$.products", hasSize(2))
+                )
+                .andReturn();
+
+        String jsonResult = mvcResult.getResponse().getContentAsString();
+
+        TradeInRequest createdTradeInRequest = new TradeInRequest(newTradeInRequestDTO);
+        createdTradeInRequest.setId(3L);
+        Product createdProduct1 = createdTradeInRequest.getProducts().get(0);
+        createdProduct1.setId(3L);
+        Product createdProduct2 = createdTradeInRequest.getProducts().get(1);
+        createdProduct2.setId(4L);
+        createdTradeInRequest.setProducts(List.of(createdProduct1, createdProduct2));
+
+        String jsonExpected = objectMapper.writeValueAsString(
+                new ResponseTradeInRequestDTO(createdTradeInRequest)
+        );
+        assertEquals(jsonExpected, jsonResult);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "",
+            " ",
+            "firstName",
+            "firstName@",
+            "a.a"
+    })
+    @Order(4)
+    void testCreateTradeInRequests_invalidEmail_returnBadRequest(String emailValues) throws Exception {
+        newTradeInRequestDTO.setEmail(emailValues);
+        tradeInRequestDTOBody = objectMapper.writeValueAsString(newTradeInRequestDTO);
+        mockMvc.perform(
+                        post(baseUrl)
+                                .content(tradeInRequestDTOBody)
+                                .contentType(APPLICATION_JSON)
+                )
+                .andExpect(status().isBadRequest());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "",
+            " ",
+            "A",
+            "AAAA",
+            "NONEXISTENT"
+    })
+    @Order(4)
+    void testCreateTradeInRequests_invalidEnums_returnBadRequest(String invalidCountry) throws Exception {
+        newTradeInRequestDTO.setShippingCountryISOCode(invalidCountry);
+        tradeInRequestDTOBody = objectMapper.writeValueAsString(newTradeInRequestDTO);
+        mockMvc.perform(
+                        post(baseUrl)
+                                .content(tradeInRequestDTOBody)
+                                .contentType(APPLICATION_JSON)
+                )
+                .andExpect(status().isBadRequest());
     }
 
     // ------------------------------ DELETE BY ID ------------------------------
