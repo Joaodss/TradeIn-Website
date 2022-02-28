@@ -98,6 +98,7 @@ public class Bag extends Product {
     }
 
     public void setBagExtrasFrom(Set<String> extras) {
+        initializeExtrasIfNull();
         for (String extra : extras)
             addExtraFrom(extra);
     }
