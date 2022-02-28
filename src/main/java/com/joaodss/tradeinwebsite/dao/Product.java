@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static javax.persistence.CascadeType.MERGE;
+import static com.joaodss.tradeinwebsite.utils.EnumsUtil.enumFormat;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -81,18 +81,19 @@ public abstract class Product {
 
     // -------------------- Custom Methods --------------------
     public void setCategoryFrom(String category) {
-        this.category = Category.valueOf(category.replace(" ", "_").toUpperCase());
+        this.category = Category.valueOf(enumFormat(category));
     }
 
     public void setBrandFrom(String brand) {
-        this.brand = Brand.valueOf(brand.replace(" ", "_").toUpperCase());
+        this.brand = Brand.valueOf(enumFormat(brand));
     }
 
     public void setConditionFrom(String condition) {
-        this.condition = Condition.valueOf(condition.replace(" ", "_").toUpperCase());
+        this.condition = Condition.valueOf(enumFormat(condition));
     }
 
     // -------------------- Hashcode and Equals --------------------
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -107,6 +108,7 @@ public abstract class Product {
                 Objects.equals(details, product.details);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id, tradeInRequest, category, brand, model, condition, details);

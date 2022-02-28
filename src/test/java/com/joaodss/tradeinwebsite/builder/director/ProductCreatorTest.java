@@ -20,7 +20,6 @@ class ProductCreatorTest {
 
     private ProductDTO bagProductDTO;
     private ProductDTO shoesProductDTO;
-    private ProductDTO invalidProductDTO;
 
     @BeforeEach
     void setUp() {
@@ -45,16 +44,6 @@ class ProductCreatorTest {
                 new ShoesDTO((short) 12),
                 List.of()
         );
-        invalidProductDTO = new ProductDTO(
-                "---",
-                "Test",
-                "Non existent",
-                "Poor",
-                "Just a test",
-                null,
-                null,
-                List.of()
-        );
     }
 
 
@@ -70,7 +59,14 @@ class ProductCreatorTest {
 
     @Test
     void testCreateProductFrom_invalidProduct_throwIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> productCreator.createProductFrom(invalidProductDTO));
+        bagProductDTO.setCategory("----");
+        assertThrows(IllegalArgumentException.class, () -> productCreator.createProductFrom(bagProductDTO));
+    }
+
+    @Test
+    void testCreateProductFrom_nullProduct_throwNullPointerException() {
+        bagProductDTO.setCategory(null);
+        assertThrows(NullPointerException.class, () -> productCreator.createProductFrom(bagProductDTO));
     }
 
 

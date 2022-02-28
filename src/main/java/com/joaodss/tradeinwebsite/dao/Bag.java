@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import static com.joaodss.tradeinwebsite.utils.EnumsUtil.enumFormat;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.EAGER;
 
@@ -93,19 +94,32 @@ public class Bag extends Product {
 
     // -------------------- Custom Methods --------------------
     public void setBagSizeFrom(String size) {
-        this.bagSize = BagSize.valueOf(size.replace(" ", "_").toUpperCase());
+        this.bagSize = BagSize.valueOf(enumFormat(size));
     }
 
     public void setBagExtrasFrom(Set<String> extras) {
-        Set<BagExtra> bagExtras = new HashSet<>();
-        for (String extra : extras) {
-            bagExtras.add(BagExtra.valueOf(extra.replace(" ", "_").toUpperCase()));
-        }
-        this.bagExtras = bagExtras;
+        initializeExtrasIfNull();
+        for (String extra : extras)
+            addExtraFrom(extra);
+    }
+
+    public void addExtraFrom(String extra) {
+        initializeExtrasIfNull();
+        this.bagExtras.add(BagExtra.valueOf(enumFormat(extra)));
+    }
+
+    public void initializeExtrasIfNull() {
+        if (this.bagExtras == null)
+            resetExtras();
+    }
+
+    public void resetExtras() {
+        this.bagExtras = new HashSet<>();
     }
 
 
     // -------------------- Hashcode and Equals --------------------
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -129,6 +143,7 @@ public class Bag extends Product {
                 Objects.equals(internalHardwareURL, bag.internalHardwareURL);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(

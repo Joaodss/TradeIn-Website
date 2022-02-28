@@ -3,7 +3,6 @@ package com.joaodss.tradeinwebsite.dto;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor

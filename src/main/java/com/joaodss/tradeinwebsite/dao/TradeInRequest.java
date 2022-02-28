@@ -1,5 +1,7 @@
 package com.joaodss.tradeinwebsite.dao;
 
+import com.joaodss.tradeinwebsite.builder.director.ProductCreator;
+import com.joaodss.tradeinwebsite.dto.ProductDTO;
 import com.joaodss.tradeinwebsite.dto.TradeInRequestDTO;
 import com.joaodss.tradeinwebsite.enums.RequestStatus;
 import com.neovisionaries.i18n.CountryCode;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.joaodss.tradeinwebsite.enums.RequestStatus.PENDING;
+import static com.joaodss.tradeinwebsite.utils.EnumsUtil.enumFormat;
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -69,9 +73,9 @@ public class TradeInRequest {
         this.lastName = tradeInRequestDTO.getLastName();
         this.email = tradeInRequestDTO.getEmail();
         this.mobileNumber = tradeInRequestDTO.getMobileNumber();
-        this.setShippingCountryFrom(tradeInRequestDTO.getShippingCountryISOCode());
-        this.requestStatus = RequestStatus.PENDING;
-//        this.products = products;
+        setShippingCountryFrom(tradeInRequestDTO.getShippingCountryISOCode());
+        this.requestStatus = PENDING;
+        setNewProducts(tradeInRequestDTO.getProducts());
     }
 
 
@@ -81,30 +85,46 @@ public class TradeInRequest {
     }
 
     public void setRequestStatusFrom(String requestStatus) {
-        this.requestStatus = RequestStatus.valueOf(requestStatus.replace(" ", "_").toUpperCase());
+        this.requestStatus = RequestStatus.valueOf(enumFormat(requestStatus));
+    }
+
+    public void setNewProducts(List<ProductDTO> productDTOList) {
+        ProductCreator productCreator = new ProductCreator();
+        resetProducts();
+        for (ProductDTO productDTO : productDTOList) {
+            Product newProduct = productCreator.createProductFrom(productDTO);
+            addProduct(newProduct);
+        }
+    }
+
+    public void resetProducts() {
+        this.products = new ArrayList<>();
     }
 
     public void addProduct(Product product) {
         product.setTradeInRequest(this);
-        products.add(product);
+        this.products.add(product);
     }
 
     public void updateProduct(Product product) {
         product.setTradeInRequest(this);
-        for (int i = 0; i < products.size(); i++) {
-            if (Objects.equals(products.get(i).getId(), product.getId()) || Objects.equals(products.get(i), product))
-                products.set(i, product);
+        for (int i = 0; i < this.products.size(); i++) {
+            if (Objects.equals(this.products.get(i).getId(), product.getId())
+                    || Objects.equals(this.products.get(i), product))
+                this.products.set(i, product);
         }
     }
 
     public void removeProduct(Product product) {
-        if (products.size() > 1)
-            products.remove(product);
-        else throw new IllegalStateException("TradeInRequest must have at least 1 Product element");
+        if (this.products.size() > 1)
+            this.products.remove(product);
+        else
+            throw new IllegalStateException("TradeInRequest must have at least 1 Product element");
     }
 
 
     // -------------------- Hashcode and Equals --------------------
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -119,6 +139,7 @@ public class TradeInRequest {
                 Objects.equals(requestStatus, that.requestStatus);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, email, mobileNumber, shippingCountry, requestStatus);
