@@ -14,13 +14,13 @@ import static com.joaodss.tradeinwebsite.utils.EnumsUtil.enumFormat;
 public class ProductCreator {
 
     public Product createProductFrom(ProductDTO productDTO) {
-        switch (Category.valueOf(enumFormat(productDTO.getCategory()))) {
-            case BAG -> {
+        switch (enumFormat(productDTO.getCategory())) {
+            case "BAG" -> {
                 ProductBuilder bagBuilder = new BagBuilder();
                 bagBuilder.buildFrom(productDTO);
                 return bagBuilder.getProduct();
             }
-            case SHOES -> {
+            case "SHOES" -> {
                 ProductBuilder shoesBuilder = new ShoesBuilder();
                 shoesBuilder.buildFrom(productDTO);
                 return shoesBuilder.getProduct();
