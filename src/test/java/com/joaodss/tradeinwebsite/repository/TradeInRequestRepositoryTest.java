@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import static com.joaodss.tradeinwebsite.enums.BagExtra.DUSTBAG;
 import static com.joaodss.tradeinwebsite.enums.BagSize.MEDIUM;
 import static com.joaodss.tradeinwebsite.enums.Brand.CHANEL;
 import static com.joaodss.tradeinwebsite.enums.Brand.GUCCI;
@@ -56,9 +57,9 @@ class TradeInRequestRepositoryTest {
             "Simple bag",
             USED,
             "No details",
-            List.of(),
+            List.of("onePhotoPath", "twoPhotoPath"),
             MEDIUM,
-            Set.of()
+            Set.of(DUSTBAG)
     );
     private Product newShoes = new Shoes(
             SHOES,
@@ -66,7 +67,7 @@ class TradeInRequestRepositoryTest {
             "Simple shoes",
             GOOD,
             "No details",
-            List.of(),
+            List.of("onePhotoPath"),
             (short) 36
     );
 

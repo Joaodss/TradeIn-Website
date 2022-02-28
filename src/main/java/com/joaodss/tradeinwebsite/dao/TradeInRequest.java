@@ -82,6 +82,8 @@ public class TradeInRequest {
     // -------------------- Custom Methods --------------------
     public void setShippingCountryFrom(String countryISOCode) {
         this.shippingCountry = CountryCode.getByCodeIgnoreCase(countryISOCode);
+        if (this.shippingCountry == null)
+            throw new IllegalArgumentException("No country ISO code for: " + countryISOCode + ".");
     }
 
     public void setRequestStatusFrom(String requestStatus) {

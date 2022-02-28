@@ -6,6 +6,8 @@ import com.joaodss.tradeinwebsite.enums.BagExtra;
 import com.joaodss.tradeinwebsite.enums.BagSize;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,39 +18,29 @@ import java.util.Set;
 @EqualsAndHashCode
 @ToString
 public class BagDTO {
-    private String size;
-    private Set<String> extras;
 
-//    private String externalFrontURL;
-//    private String externalBackURL;
-//    private String externalBottomURL;
-//    private String externalLogoURL;
-//    private String externalSerialURL;
-//    private String externalZipperURL;
-//    private String externalHardwareURL;
-//    private String internalInsideURL;
-//    private String internalBottomURL;
-//    private String internalLogoURL;
-//    private String internalSerialURL;
-//    private String internalZipperURL;
-//    private String internalHardwareURL;
+    @NotNull
+    @NotBlank
+    private String size;
+
+    private Set<String> extras;
 
 
     // -------------------- Custom Constructor --------------------
     public BagDTO(Product product) {
         if (product.getClass().equals(Bag.class)) {
-            setSize(((Bag) product).getBagSize());
-            setExtras(((Bag) product).getBagExtras());
+            setSizeFrom(((Bag) product).getBagSize());
+            setExtrasFrom(((Bag) product).getBagExtras());
         }
     }
 
 
     // -------------------- Custom Methods --------------------
-    public void setSize(BagSize size) {
+    public void setSizeFrom(BagSize size) {
         this.size = size.toString();
     }
 
-    public void setExtras(Set<BagExtra> extras) {
+    public void setExtrasFrom(Set<BagExtra> extras) {
         this.extras = new HashSet<>();
         for (BagExtra extra : extras)
             this.extras.add(extra.toString());

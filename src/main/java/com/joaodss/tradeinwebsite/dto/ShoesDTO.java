@@ -4,6 +4,9 @@ import com.joaodss.tradeinwebsite.dao.Product;
 import com.joaodss.tradeinwebsite.dao.Shoes;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -11,19 +14,10 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 public class ShoesDTO {
-    private Short size;
 
-//    private String externalTopURL;
-//    private String externalLeftSideURL;
-//    private String externalRightSideURL;
-//    private String externalBottomURL;
-//    private String externalLogoURL;
-//    private String externalSerialURL;
-//    private String externalZipperURL;
-//    private String externalHardwareURL;
-//    private String internalInsideURL;
-//    private String internalLogoURL;
-//    private String internalSerialURL;
+    @NotNull
+    @Positive
+    private Short size;
 
 
     // -------------------- Custom Constructor --------------------

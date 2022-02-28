@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Set;
 
+import static com.joaodss.tradeinwebsite.enums.BagExtra.BOX;
 import static com.joaodss.tradeinwebsite.enums.BagSize.MEDIUM;
 import static com.joaodss.tradeinwebsite.enums.Brand.PRADA;
 import static com.joaodss.tradeinwebsite.enums.Category.BAG;
@@ -38,9 +39,9 @@ class BagBuilderTest {
             "Re-Edition 2000 sequined Re-Nylon bag",
             "Good",
             "In good shape",
-            new BagDTO("Medium", Set.of()),
+            new BagDTO("Medium", Set.of("Box")),
             null,
-            List.of()
+            List.of("one", "two")
     );
 
 
@@ -102,7 +103,7 @@ class BagBuilderTest {
         bagBuilder = new BagBuilder(productDTO);
         bagBuilder.setProductSpecificInformation();
         assertEquals(MEDIUM, bagBuilder.getBag().getBagSize());
-        assertEquals(Set.of(), bagBuilder.getBag().getBagExtras());
+        assertEquals(Set.of(BOX), bagBuilder.getBag().getBagExtras());
     }
 
     @Test
@@ -133,7 +134,7 @@ class BagBuilderTest {
         bagResult.setCondition(GOOD);
         bagResult.setDetails("In good shape");
         bagResult.setBagSize(MEDIUM);
-        bagResult.setBlemishPhotos(List.of());
+        bagResult.setBlemishPhotos(List.of("one", "two"));
 
         bagBuilder.setBag(bagResult);
 
