@@ -5,19 +5,22 @@ import com.joaodss.tradeinwebsite.builder.builders.ProductBuilder;
 import com.joaodss.tradeinwebsite.builder.builders.ShoesBuilder;
 import com.joaodss.tradeinwebsite.dao.Product;
 import com.joaodss.tradeinwebsite.dto.ProductDTO;
+import com.joaodss.tradeinwebsite.enums.Category;
 import lombok.NoArgsConstructor;
+
+import static com.joaodss.tradeinwebsite.utils.EnumsUtil.enumFormat;
 
 @NoArgsConstructor
 public class ProductCreator {
 
     public Product createProductFrom(ProductDTO productDTO) {
-        switch (productDTO.getCategory().toUpperCase()) {
-            case "BAG" -> {
+        switch (Category.valueOf(enumFormat(productDTO.getCategory()))) {
+            case BAG -> {
                 ProductBuilder bagBuilder = new BagBuilder();
                 bagBuilder.buildFrom(productDTO);
                 return bagBuilder.getProduct();
             }
-            case "SHOES" -> {
+            case SHOES -> {
                 ProductBuilder shoesBuilder = new ShoesBuilder();
                 shoesBuilder.buildFrom(productDTO);
                 return shoesBuilder.getProduct();
