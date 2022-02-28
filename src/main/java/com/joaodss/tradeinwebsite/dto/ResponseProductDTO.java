@@ -8,6 +8,8 @@ import lombok.*;
 
 import java.util.List;
 
+import static com.joaodss.tradeinwebsite.enums.Category.BAG;
+import static com.joaodss.tradeinwebsite.enums.Category.SHOES;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,8 +37,8 @@ public class ResponseProductDTO {
         this.model = product.getModel();
         setCondition(product.getCondition());
         this.details = product.getDetails();
-        this.bagDTO = new BagDTO(product);
-        this.shoesDTO = new ShoesDTO(product);
+        setBagDTO(product);
+        setShoesDTO(product);
         this.blemishPhotos = product.getBlemishPhotos();
     }
 
@@ -46,12 +48,22 @@ public class ResponseProductDTO {
         this.category = category.toString();
     }
 
-    private void setBrand(Brand brand) {
+    public void setBrand(Brand brand) {
         this.brand = brand.toString();
     }
 
-    private void setCondition(Condition condition) {
+    public void setCondition(Condition condition) {
         this.condition = condition.toString();
+    }
+
+    public void setBagDTO(Product product) {
+        if (product.getCategory().equals(BAG))
+            this.bagDTO = new BagDTO(product);
+    }
+
+    public void setShoesDTO(Product product) {
+        if (product.getCategory().equals(SHOES))
+            this.shoesDTO = new ShoesDTO(product);
     }
 
 }
