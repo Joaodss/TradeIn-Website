@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -98,7 +99,21 @@ public class Bag extends Product {
 
     public void setBagExtrasFrom(Set<String> extras) {
         for (String extra : extras)
-            this.bagExtras.add(BagExtra.valueOf(enumFormat(extra)));
+            addExtraFrom(extra);
+    }
+
+    public void addExtraFrom(String extra) {
+        initializeExtrasIfNull();
+        this.bagExtras.add(BagExtra.valueOf(enumFormat(extra)));
+    }
+
+    public void initializeExtrasIfNull() {
+        if (this.bagExtras == null)
+            resetExtras();
+    }
+
+    public void resetExtras() {
+        this.bagExtras = new HashSet<>();
     }
 
 

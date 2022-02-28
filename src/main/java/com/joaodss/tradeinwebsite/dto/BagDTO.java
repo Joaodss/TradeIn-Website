@@ -6,8 +6,8 @@ import com.joaodss.tradeinwebsite.enums.BagExtra;
 import com.joaodss.tradeinwebsite.enums.BagSize;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -49,9 +49,9 @@ public class BagDTO {
     }
 
     public void setExtras(Set<BagExtra> extras) {
-        this.extras = extras.stream()
-                .map(Enum::toString)
-                .collect(Collectors.toSet());
+        this.extras = new HashSet<>();
+        for (BagExtra extra : extras)
+            this.extras.add(extra.toString());
     }
 
 }

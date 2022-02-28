@@ -6,6 +6,7 @@ import com.joaodss.tradeinwebsite.enums.RequestStatus;
 import com.neovisionaries.i18n.CountryCode;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,9 +50,9 @@ public class ResponseTradeInRequestDTO {
     }
 
     private void setProducts(List<Product> productList) {
-        this.products = productList.stream()
-                .map(ResponseProductDTO::new)
-                .collect(Collectors.toList());
+        this.products = new ArrayList<>();
+        for (Product product : productList)
+            this.products.add(new ResponseProductDTO(product));
     }
 
 }
