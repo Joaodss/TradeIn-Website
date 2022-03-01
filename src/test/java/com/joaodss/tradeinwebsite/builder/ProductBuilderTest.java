@@ -1,21 +1,52 @@
 package com.joaodss.tradeinwebsite.builder;
 
 import com.joaodss.tradeinwebsite.dao.Bag;
+import com.joaodss.tradeinwebsite.dao.Product;
 import com.joaodss.tradeinwebsite.dao.Shoes;
 import com.joaodss.tradeinwebsite.dto.BagDTO;
 import com.joaodss.tradeinwebsite.dto.ProductDTO;
 import com.joaodss.tradeinwebsite.dto.ShoesDTO;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.Set;
 
+import static com.joaodss.tradeinwebsite.enums.Brand.CHANEL;
+import static com.joaodss.tradeinwebsite.enums.Category.SHOES;
+import static com.joaodss.tradeinwebsite.enums.Condition.GOOD;
+import static com.joaodss.tradeinwebsite.enums.RequestStatus.PENDING;
 import static org.junit.jupiter.api.Assertions.*;
 
+
+@TestMethodOrder(OrderAnnotation.class)
 class ProductBuilderTest {
     private ProductBuilder productBuilder;
+
     private ProductDTO bagProductDTO;
-    private ProductDTO shoesProductDTO;
+    private final ProductDTO shoesProductDTO = new ProductDTO(
+            "Shoes",
+            "Gucci",
+            "Horsebit mid-heel slingback pumps",
+            "Very Good",
+            "In very good shape",
+            "link to google drive",
+            null,
+            new ShoesDTO((short) 12)
+    );
+    private final Product shoes = new Shoes(
+            PENDING,
+            SHOES,
+            CHANEL,
+            "Simple shoes",
+            GOOD,
+            "No details",
+            "link",
+            (short) 36
+    );
+
 
     @BeforeEach
     void setUp() {
@@ -30,49 +61,53 @@ class ProductBuilderTest {
                 new BagDTO("Medium", Set.of()),
                 null
         );
-        shoesProductDTO = new ProductDTO(
-                "Shoes",
-                "Gucci",
-                "Horsebit mid-heel slingback pumps",
-                "Very Good",
-                "In very good shape",
-                "link to google drive",
-                null,
-                new ShoesDTO((short) 12)
-        );
     }
 
     @Test
-    void testCreateProductFrom_validProductCategory_dontThrow() {
+    @Order(1)
+    void testBuildProductFrom_validProductCategory_dontThrowException() {
         assertDoesNotThrow(() -> productBuilder.buildProductFrom(bagProductDTO));
     }
 
     @Test
-    void testCreateProductFrom_invalidProductCategory_throwIllegalArgumentException() {
+    @Order(1)
+    void testBuildProductFrom_invalidProductCategory_throwException() {
         bagProductDTO.setCategory("InvalidCategory");
         assertThrows(IllegalArgumentException.class, () -> productBuilder.buildProductFrom(bagProductDTO));
     }
 
     @Test
-    void testCreateProductFrom_nullProduct_throwNullPointerException() {
+    @Order(1)
+    void testBuildProductFrom_nullProduct_throwNullPointerException() {
         bagProductDTO.setCategory(null);
         assertThrows(NullPointerException.class, () -> productBuilder.buildProductFrom(bagProductDTO));
     }
 
     @Test
-    void testBuild_bagProduct_returnObjectTypeBag() {
-        assertEquals(Bag.class, productBuilder.buildProductFrom(bagProductDTO).build().getClass());
+    @Order(2)
+    void testBuildProductFrom_bagProduct_returnObjectTypeBag() {
+        productBuilder.buildProductFrom(bagProductDTO);
+        assertEquals(Bag.class, productBuilder.getProduct().getClass());
     }
 
     @Test
-    void testBuild_shoesProduct_returnObjectTypeBagShoes() {
-        assertEquals(Shoes.class, productBuilder.buildProductFrom(shoesProductDTO).build().getClass());
+    @Order(2)
+    void testBuildProductFrom_shoesProduct_returnObjectTypeBagShoes() {
+        productBuilder.buildProductFrom(shoesProductDTO);
+        assertEquals(Shoes.class, productBuilder.getProduct().getClass());
     }
 
     @Test
-    void testBuild_noProductInitialized_returnNull() {
+    @Order(3)
+    void testBuild_ProductCreated_returnProduct() {
+        productBuilder.setProduct(shoes);
+        assertEquals(shoes, productBuilder.build());
+    }
+
+    @Test
+    @Order(3)
+    void testBuild_noProductCreated_returnNull() {
         assertNull(productBuilder.build());
     }
-
 
 }

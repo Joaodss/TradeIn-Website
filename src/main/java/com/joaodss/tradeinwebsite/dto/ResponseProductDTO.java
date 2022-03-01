@@ -32,41 +32,41 @@ public class ResponseProductDTO {
     // -------------------- Custom Constructor --------------------
     public ResponseProductDTO(Product product) {
         this.id = product.getId();
-        setRequestStatus(product.getRequestStatus());
-        setCategory(product.getCategory());
-        setBrand(product.getBrand());
+        setRequestStatusFrom(product.getRequestStatus());
+        setCategoryFrom(product.getCategory());
+        setBrandFrom(product.getBrand());
         this.model = product.getModel();
-        setCondition(product.getCondition());
+        setConditionFrom(product.getCondition());
         this.details = product.getDetails();
-        setBagDTO(product);
-        setShoesDTO(product);
+        setBagDTOFrom(product);
+        setShoesDTOFrom(product);
         this.photosFolderURL = product.getPhotosFolderURL();
     }
 
 
     // -------------------- Custom Methods --------------------
-    private void setRequestStatus(RequestStatus requestStatus) {
+    private void setRequestStatusFrom(RequestStatus requestStatus) {
         this.requestStatus = requestStatus.toString();
     }
 
-    public void setCategory(Category category) {
+    public void setCategoryFrom(Category category) {
         this.category = category.toString();
     }
 
-    public void setBrand(Brand brand) {
+    public void setBrandFrom(Brand brand) {
         this.brand = brand.toString();
     }
 
-    public void setCondition(Condition condition) {
+    public void setConditionFrom(Condition condition) {
         this.condition = condition.toString();
     }
 
-    public void setBagDTO(Product product) {
+    public void setBagDTOFrom(Product product) {
         if (product.getCategory().equals(BAG))
             this.bagDTO = new BagDTO(product);
     }
 
-    public void setShoesDTO(Product product) {
+    public void setShoesDTOFrom(Product product) {
         if (product.getCategory().equals(SHOES))
             this.shoesDTO = new ShoesDTO(product);
     }

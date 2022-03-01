@@ -3,55 +3,66 @@ package com.joaodss.tradeinwebsite.builder;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import com.joaodss.tradeinwebsite.dto.ResponseProductDTO;
 import com.joaodss.tradeinwebsite.dto.ResponseTradeInRequestDTO;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.LinkedList;
 import java.util.List;
 
+@Getter
+@Setter
 public class ValueRangeBuilder {
     private ValueRange valueRange;
 
 
     public ValueRangeBuilder() {
-        this.valueRange = new ValueRange();
-        this.valueRange
-                .setMajorDimension("ROWS")
-                .setValues(List.of(new LinkedList<>()));
+        reset();
     }
 
 
     public ValueRangeBuilder addTradeInRequest(ResponseTradeInRequestDTO tradeInRequest) {
-        valueRange.getValues().get(0).add(tradeInRequest.getId());
-        valueRange.getValues().get(0).add(tradeInRequest.getFirstName());
-        valueRange.getValues().get(0).add(tradeInRequest.getLastName());
-        valueRange.getValues().get(0).add(tradeInRequest.getEmail());
-        valueRange.getValues().get(0).add(tradeInRequest.getMobileNumber());
-        valueRange.getValues().get(0).add(tradeInRequest.getShippingCountry());
+        addValue(tradeInRequest.getId());
+        addValue(tradeInRequest.getFirstName());
+        addValue(tradeInRequest.getLastName());
+        addValue(tradeInRequest.getEmail());
+        addValue(tradeInRequest.getMobileNumber());
+        addValue(tradeInRequest.getShippingCountry());
         return this;
     }
 
     public ValueRangeBuilder addProduct(ResponseProductDTO product) {
-        valueRange.getValues().get(0).add(product.getId());
-        valueRange.getValues().get(0).add(product.getRequestStatus());
-        valueRange.getValues().get(0).add(product.getCategory());
-        valueRange.getValues().get(0).add(product.getBrand());
-        valueRange.getValues().get(0).add(product.getModel());
-        valueRange.getValues().get(0).add(product.getCondition());
-        valueRange.getValues().get(0).add(product.getDetails());
-        valueRange.getValues().get(0).add(product.getPhotosFolderURL());
-        valueRange.getValues().get(0).add(
+        addValue(product.getId());
+        addValue(product.getRequestStatus());
+        addValue(product.getCategory());
+        addValue(product.getBrand());
+        addValue(product.getModel());
+        addValue(product.getCondition());
+        addValue(product.getDetails());
+        addValue(product.getPhotosFolderURL());
+        addValue(
                 product.getBagDTO() != null ? product.getBagDTO().getSize() : ""
         );
-        valueRange.getValues().get(0).add(
+        addValue(
                 product.getBagDTO() != null ? product.getBagDTO().getExtras().toString() : ""
         );
-        valueRange.getValues().get(0).add(
+        addValue(
                 product.getShoesDTO() != null ? product.getShoesDTO().getSize() : ""
         );
         return this;
     }
 
+    public ValueRangeBuilder addValue(Object value) {
+        this.valueRange.getValues().get(0).add(
+                value != null ? value : ""
+        );
+        return this;
+    }
+
     public ValueRangeBuilder reset() {
-        valueRange = new ValueRange();
+        this.valueRange = new ValueRange();
+        this.valueRange
+                .setMajorDimension("ROWS")
+                .setValues(List.of(new LinkedList<>()));
         return this;
     }
 

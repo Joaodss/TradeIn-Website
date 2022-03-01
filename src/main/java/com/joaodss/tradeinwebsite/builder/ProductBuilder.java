@@ -4,11 +4,15 @@ import com.joaodss.tradeinwebsite.dao.Bag;
 import com.joaodss.tradeinwebsite.dao.Product;
 import com.joaodss.tradeinwebsite.dao.Shoes;
 import com.joaodss.tradeinwebsite.dto.ProductDTO;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import static com.joaodss.tradeinwebsite.utils.EnumsUtil.enumFormat;
 
 @NoArgsConstructor
+@Getter
+@Setter
 public class ProductBuilder {
     private Product product;
 
