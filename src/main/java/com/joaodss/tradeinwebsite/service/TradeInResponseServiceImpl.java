@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TradeInResponseServiceImpl implements TradeInResponseService {
     private final TradeInRequestRepository tradeInRequestRepository;
+    private final GoogleSheetsService googleSheetsService;
 
 
     // -------------------- Get trade in requests --------------------
@@ -45,10 +46,15 @@ public class TradeInResponseServiceImpl implements TradeInResponseService {
     // -------------------- Create trade in requests --------------------
     public ResponseTradeInRequestDTO create(TradeInRequestDTO tradeInRequestDTO) {
         log.info("Creating a new trade in request");
+        // Create tradeInRequest
         TradeInRequest tradeInRequest = new TradeInRequest(tradeInRequestDTO);
-        TradeInRequest savedTradeInRequest = saveToDatabase(tradeInRequest);
+        // Save tradeInRequest
+        long savedId = saveToDatabase(tradeInRequest).getId();
+        // Get tradeInRequest with products joined
+        ResponseTradeInRequestDTO savedTradeInRequest = getById(savedId);
+        // Export to GoogleSheets
         exportToGoogleSheets(savedTradeInRequest);
-        return getById(savedTradeInRequest.getId());
+        return savedTradeInRequest;
     }
 
     public TradeInRequest saveToDatabase(TradeInRequest tradeInRequest) {
@@ -59,9 +65,9 @@ public class TradeInResponseServiceImpl implements TradeInResponseService {
     }
 
     //TODO: Implement save to google sheets logic
-    public void exportToGoogleSheets(TradeInRequest tradeInRequest) {
+    public void exportToGoogleSheets(ResponseTradeInRequestDTO tradeInRequest) {
         log.info("Exporting trade in request to google sheets");
-        // logic to export to google sheets
+        googleSheetsService.writeTradeInRequest(tradeInRequest);
         log.info("Trade in request exported to google sheets");
     }
 
