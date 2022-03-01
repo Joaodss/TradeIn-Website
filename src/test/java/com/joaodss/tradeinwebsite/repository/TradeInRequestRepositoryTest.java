@@ -13,11 +13,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.joaodss.tradeinwebsite.enums.BagExtra.DUSTBAG;
 import static com.joaodss.tradeinwebsite.enums.BagSize.MEDIUM;
 import static com.joaodss.tradeinwebsite.enums.Brand.CHANEL;
 import static com.joaodss.tradeinwebsite.enums.Brand.GUCCI;
@@ -196,7 +196,9 @@ class TradeInRequestRepositoryTest {
     @Test
     @Order(5)
     void testReadTradeInRequest_AllJoined_returnObjectsWithChild() {
-        List<TradeInRequest> elements = tradeInRequestRepository.findAllJoined();
+        List<TradeInRequest> elements =
+                new ArrayList<>(tradeInRequestRepository.findAllJoined());
+
         assertEquals(List.of(bag), elements.get(0).getProducts());
         assertEquals(List.of(shoes), elements.get(1).getProducts());
     }
@@ -212,7 +214,8 @@ class TradeInRequestRepositoryTest {
     @Test
     @Order(5)
     void testReadTradeInRequest_byParentEmailJoined_returnObjectWithChild() {
-        List<TradeInRequest> elements = tradeInRequestRepository.findByEmailJoined("john.doe@email.com");
+        List<TradeInRequest> elements =
+                new ArrayList<>(tradeInRequestRepository.findByEmailJoined("john.doe@email.com"));
         assertEquals(List.of(bag), elements.get(0).getProducts());
     }
 

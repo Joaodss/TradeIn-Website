@@ -21,7 +21,6 @@ public class ResponseTradeInRequestDTO {
     private String email;
     private String mobileNumber;
     private String shippingCountry;
-    private String requestStatus;
     private List<ResponseProductDTO> products;
 
 
@@ -39,7 +38,7 @@ public class ResponseTradeInRequestDTO {
 
     // -------------------- Custom Methods --------------------
     private void setShippingCountry(CountryCode countryCode) {
-        this.shippingCountry = countryCode.toString();
+        this.shippingCountry = countryCode.getAlpha3();
     }
 
     private void setProducts(List<Product> productList) {
