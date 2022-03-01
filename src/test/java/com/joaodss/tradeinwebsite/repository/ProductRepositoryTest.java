@@ -42,31 +42,32 @@ class ProductRepositoryTest {
     private Product shoes;
     private TradeInRequest tradeInRequest1;
     private TradeInRequest tradeInRequest2;
-    private final TradeInRequest newTradeInRequest = new TradeInRequest(
+    private TradeInRequest newTradeInRequest = new TradeInRequest(
             "Maria",
             "Doe",
             "maria.doe@email.com",
             "9999999999",
-            ES,
-            PENDING
+            ES
     );
     private final Product newBag = new Bag(
+            PENDING,
             BAG,
             GUCCI,
             "Simple bag",
             USED,
             "No details",
-            List.of(),
+            "link to photos",
             MEDIUM,
             Set.of()
     );
     private final Product newShoes = new Shoes(
+            PENDING,
             SHOES,
             CHANEL,
             "Simple shoes",
             GOOD,
             "No details",
-            List.of(),
+            "link to photos",
             (short) 36
     );
 
@@ -77,16 +78,16 @@ class ProductRepositoryTest {
                 "Doe",
                 "john.doe@email.com",
                 "12345678",
-                US,
-                PENDING
+                US
         );
         bag = new Bag(
+                PENDING,
                 BAG,
                 GUCCI,
                 "Simple bag",
                 USED,
                 "No details",
-                List.of(),
+                "link",
                 MEDIUM,
                 Set.of()
         );
@@ -98,16 +99,16 @@ class ProductRepositoryTest {
                 "Doe",
                 "robin.doe@email.com",
                 "987654321",
-                PT,
-                PENDING
+                PT
         );
         shoes = new Shoes(
+                PENDING,
                 SHOES,
                 CHANEL,
                 "Simple shoes",
                 GOOD,
                 "No details",
-                List.of(),
+                "link",
                 (short) 36
         );
         tradeInRequest2.addProduct(shoes);

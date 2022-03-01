@@ -63,9 +63,9 @@ class TradeInResponseServiceTest {
                             "Simple shoes",
                             "good",
                             "No details",
+                            "link to photos in drive",
                             null,
-                            new ShoesDTO((short) 32),
-                            List.of()
+                            new ShoesDTO((short) 32)
                     )
             )
 
@@ -78,17 +78,17 @@ class TradeInResponseServiceTest {
                 "Doe",
                 "john.doe@email.com",
                 "12345678",
-                US,
-                PENDING
+                US
         );
         tradeInRequest1.setId(1L);
         bag = new Bag(
+                PENDING,
                 BAG,
                 GUCCI,
                 "Simple bag",
                 USED,
                 "No details",
-                List.of(),
+                "link",
                 MEDIUM,
                 Set.of()
         );
@@ -100,17 +100,17 @@ class TradeInResponseServiceTest {
                 "Doe",
                 "robin.doe@email.com",
                 "987654321",
-                PT,
-                PENDING
+                PT
         );
         tradeInRequest2.setId(2L);
         shoes = new Shoes(
+                PENDING,
                 SHOES,
                 CHANEL,
                 "Simple shoes",
                 GOOD,
                 "No details",
-                List.of(),
+                "link",
                 (short) 36
         );
         shoes.setId(2L);

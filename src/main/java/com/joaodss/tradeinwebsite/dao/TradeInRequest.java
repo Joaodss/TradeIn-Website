@@ -1,9 +1,8 @@
 package com.joaodss.tradeinwebsite.dao;
 
-import com.joaodss.tradeinwebsite.builder.director.ProductCreator;
+import com.joaodss.tradeinwebsite.builder.ProductBuilder;
 import com.joaodss.tradeinwebsite.dto.ProductDTO;
 import com.joaodss.tradeinwebsite.dto.TradeInRequestDTO;
-import com.joaodss.tradeinwebsite.enums.RequestStatus;
 import com.neovisionaries.i18n.CountryCode;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -13,10 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.joaodss.tradeinwebsite.enums.RequestStatus.PENDING;
-import static com.joaodss.tradeinwebsite.utils.EnumsUtil.enumFormat;
 import static javax.persistence.CascadeType.*;
-import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -49,32 +45,34 @@ public class TradeInRequest {
     @Column(name = "shipping_country", nullable = false)
     private CountryCode shippingCountry;
 
-    @Enumerated(STRING)
-    @Column(name = "request_status", nullable = false)
-    private RequestStatus requestStatus;
-
     @ToString.Exclude
     @OneToMany(mappedBy = "tradeInRequest", cascade = {PERSIST, MERGE, REMOVE}, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
 
 
     // -------------------- Custom Constructor --------------------
-    public TradeInRequest(String firstName, String lastName, String email, String mobileNumber, CountryCode shippingCountry, RequestStatus requestStatus) {
+    public TradeInRequest(
+            String firstName,
+            String lastName,
+            String email,
+            String mobileNumber,
+            CountryCode shippingCountry
+    ) {
+        log.info("Constructing TradeInRequest manually");
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.mobileNumber = mobileNumber;
         this.shippingCountry = shippingCountry;
-        this.requestStatus = requestStatus;
     }
 
     public TradeInRequest(TradeInRequestDTO tradeInRequestDTO) {
+        log.info("Constructing TradeInRequest from DTO");
         this.firstName = tradeInRequestDTO.getFirstName();
         this.lastName = tradeInRequestDTO.getLastName();
         this.email = tradeInRequestDTO.getEmail();
         this.mobileNumber = tradeInRequestDTO.getMobileNumber();
         setShippingCountryFrom(tradeInRequestDTO.getShippingCountryISOCode());
-        this.requestStatus = PENDING;
         setNewProducts(tradeInRequestDTO.getProducts());
     }
 
@@ -86,15 +84,13 @@ public class TradeInRequest {
             throw new IllegalArgumentException("No country ISO code for: " + countryISOCode + ".");
     }
 
-    public void setRequestStatusFrom(String requestStatus) {
-        this.requestStatus = RequestStatus.valueOf(enumFormat(requestStatus));
-    }
-
     public void setNewProducts(List<ProductDTO> productDTOList) {
-        ProductCreator productCreator = new ProductCreator();
+        ProductBuilder productBuilder = new ProductBuilder();
         resetProducts();
         for (ProductDTO productDTO : productDTOList) {
-            Product newProduct = productCreator.createProductFrom(productDTO);
+            Product newProduct = productBuilder
+                    .buildProductFrom(productDTO)
+                    .build();
             addProduct(newProduct);
         }
     }
@@ -118,10 +114,10 @@ public class TradeInRequest {
     }
 
     public void removeProduct(Product product) {
-        if (this.products.size() > 1)
-            this.products.remove(product);
-        else
+        if (this.products.size() <= 1)
             throw new IllegalStateException("TradeInRequest must have at least 1 Product element");
+        else
+            this.products.remove(product);
     }
 
 
@@ -137,13 +133,13 @@ public class TradeInRequest {
                 Objects.equals(lastName, that.lastName) &&
                 Objects.equals(email, that.email) &&
                 Objects.equals(mobileNumber, that.mobileNumber) &&
-                Objects.equals(shippingCountry, that.shippingCountry) &&
-                Objects.equals(requestStatus, that.requestStatus);
+                Objects.equals(shippingCountry, that.shippingCountry);
     }
 
     @Generated
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, mobileNumber, shippingCountry, requestStatus);
+        return Objects.hash(id, firstName, lastName, email, mobileNumber, shippingCountry);
     }
+
 }

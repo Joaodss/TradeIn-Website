@@ -1,19 +1,20 @@
 package com.joaodss.tradeinwebsite.dao;
 
+import com.joaodss.tradeinwebsite.dto.ProductDTO;
 import com.joaodss.tradeinwebsite.enums.Brand;
 import com.joaodss.tradeinwebsite.enums.Category;
 import com.joaodss.tradeinwebsite.enums.Condition;
+import com.joaodss.tradeinwebsite.enums.RequestStatus;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
+import static com.joaodss.tradeinwebsite.enums.RequestStatus.PENDING;
+import static com.joaodss.tradeinwebsite.enums.RequestStatus.valueOf;
 import static com.joaodss.tradeinwebsite.utils.EnumsUtil.enumFormat;
 import static javax.persistence.EnumType.STRING;
-import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.IDENTITY;
 import static javax.persistence.InheritanceType.JOINED;
 
@@ -38,6 +39,10 @@ public abstract class Product {
     private TradeInRequest tradeInRequest;
 
     @Enumerated(STRING)
+    @Column(name = "request_status", nullable = false)
+    private RequestStatus requestStatus;
+
+    @Enumerated(STRING)
     @Column(name = "category", nullable = false)
     private Category category;
 
@@ -55,31 +60,47 @@ public abstract class Product {
     @Column(name = "details")
     private String details;
 
-    @ElementCollection(targetClass = String.class, fetch = EAGER)
-    @CollectionTable(name = "blemish_photos")
-    @Column(name = "photo_url")
-    private List<String> blemishPhotos = new ArrayList<>();
+    @Column(name = "photos_folder_url", nullable = false)
+    private String photosFolderURL;
 
 
     // -------------------- Custom Constructor --------------------
     public Product(
+            RequestStatus requestStatus,
             Category category,
             Brand brand,
             String model,
             Condition condition,
             String details,
-            List<String> blemishPhotos
+            String photosFolderURL
     ) {
+        log.info("Constructing Product manually");
+        this.requestStatus = requestStatus;
         this.category = category;
         this.brand = brand;
         this.model = model;
         this.condition = condition;
         this.details = details;
-        this.blemishPhotos = blemishPhotos;
+        this.photosFolderURL = photosFolderURL;
+    }
+
+    public Product(ProductDTO productDTO) {
+        log.info("Constructing Product from DTO");
+        this.requestStatus = PENDING;
+        setCategoryFrom(productDTO.getCategory());
+        setBrandFrom(productDTO.getBrand());
+        this.model = productDTO.getModel();
+        setConditionFrom(productDTO.getCondition());
+        this.details = productDTO.getDetails();
+        this.photosFolderURL = productDTO.getPhotosFolderURL();
     }
 
 
     // -------------------- Custom Methods --------------------
+    public void setRequestStatusFrom(String requestStatus) {
+        this.requestStatus = valueOf(enumFormat(requestStatus));
+    }
+
     public void setCategoryFrom(String category) {
         this.category = Category.valueOf(enumFormat(category));
     }
@@ -92,6 +113,7 @@ public abstract class Product {
         this.condition = Condition.valueOf(enumFormat(condition));
     }
 
+
     // -------------------- Hashcode and Equals --------------------
     @Generated
     @Override
@@ -100,17 +122,19 @@ public abstract class Product {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
         return Objects.equals(id, product.id) &&
-                Objects.equals(tradeInRequest, product.tradeInRequest) &&
+                Objects.equals(requestStatus, product.requestStatus) &&
                 Objects.equals(category, product.category) &&
                 Objects.equals(brand, product.brand) &&
                 Objects.equals(model, product.model) &&
                 Objects.equals(condition, product.condition) &&
-                Objects.equals(details, product.details);
+                Objects.equals(details, product.details) &&
+                Objects.equals(photosFolderURL, product.photosFolderURL);
     }
 
     @Generated
     @Override
     public int hashCode() {
-        return Objects.hash(id, tradeInRequest, category, brand, model, condition, details);
+        return Objects.hash(id, requestStatus, category, brand, model, condition, details, photosFolderURL);
     }
+
 }

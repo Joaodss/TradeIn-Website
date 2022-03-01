@@ -67,22 +67,24 @@ class TradeInRequestControllerIntegrationTest {
     private TradeInRequest tradeInRequest1;
     private TradeInRequest tradeInRequest2;
     private Product newBag = new Bag(
+            PENDING,
             BAG,
             GUCCI,
             "Simple bag",
             USED,
             "No details",
-            List.of("One photo", "Two photos"),
+            "link somewhere",
             MEDIUM,
             Set.of(BOX, MIRROR)
     );
     private Product newShoes = new Shoes(
+            PENDING,
             SHOES,
             CHANEL,
             "Simple shoes",
             GOOD,
             "No details",
-            List.of("One photo", "Two photos", "Three photos"),
+            "link somewhere",
             (short) 36
     );
     private TradeInRequestDTO newTradeInRequestDTO = new TradeInRequestDTO(
@@ -98,12 +100,12 @@ class TradeInRequestControllerIntegrationTest {
                             "New Fancy Bag",
                             "Very good",
                             "A new bag in very good conditions",
+                            "link",
                             new BagDTO(
                                     "Medium",
                                     Set.of("Mirror", "name tag")
                             ),
-                            null,
-                            List.of("defect1", "defect2")
+                            null
                     ),
                     new ProductDTO(
                             "Shoes",
@@ -111,11 +113,11 @@ class TradeInRequestControllerIntegrationTest {
                             "New Fancy Shoes",
                             "Good",
                             "Used shoes in good conditions",
+                            "link somewhere",
                             null,
                             new ShoesDTO(
                                     (short) 35
-                            ),
-                            List.of("defect1", "defect2", "defect3")
+                            )
                     )
             )
 
@@ -132,16 +134,16 @@ class TradeInRequestControllerIntegrationTest {
                 "Doe",
                 "john.doe@email.com",
                 "12345678",
-                US,
-                PENDING
+                US
         );
         bag = new Bag(
+                PENDING,
                 BAG,
                 GUCCI,
                 "Simple bag",
                 USED,
                 "No details",
-                List.of(),
+                "link",
                 MEDIUM,
                 Set.of()
         );
@@ -152,16 +154,16 @@ class TradeInRequestControllerIntegrationTest {
                 "Doe",
                 "robin.doe@email.com",
                 "987654321",
-                PT,
-                PENDING
+                PT
         );
         shoes = new Shoes(
+                PENDING,
                 SHOES,
                 CHANEL,
                 "Simple shoes",
                 GOOD,
                 "No details",
-                List.of(),
+                "link",
                 (short) 36
         );
         tradeInRequest2.addProduct(shoes);
