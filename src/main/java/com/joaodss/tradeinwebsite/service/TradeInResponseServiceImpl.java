@@ -1,6 +1,7 @@
 package com.joaodss.tradeinwebsite.service;
 
 import com.joaodss.tradeinwebsite.dao.TradeInRequest;
+import com.joaodss.tradeinwebsite.dto.ResponseProductDTO;
 import com.joaodss.tradeinwebsite.dto.ResponseTradeInRequestDTO;
 import com.joaodss.tradeinwebsite.dto.TradeInRequestDTO;
 import com.joaodss.tradeinwebsite.repository.TradeInRequestRepository;
@@ -78,7 +79,7 @@ public class TradeInResponseServiceImpl implements TradeInResponseService {
         ResponseTradeInRequestDTO tradeInRequest = getById(id);
         deleteFromDatabase(id);
         deleteFromGoogleSheets(id);
-//        deleteFromGoogleDrive();
+        deleteProductsFromGoogleDrive(tradeInRequest.getProducts());
         log.info("Trade in request with id: {} deleted", id);
         return tradeInRequest;
     }
@@ -92,12 +93,18 @@ public class TradeInResponseServiceImpl implements TradeInResponseService {
     //TODO: Implement delete from google sheets logic
     public void deleteFromGoogleSheets(long id) {
         log.info("Deleting trade in request with id: {} from google sheets", id);
-        // logic to export to google sheets
+        // logic to delete from google sheets
         log.info("Trade in request with id: {} deleted from google sheets", id);
     }
 
+    public void deleteProductsFromGoogleDrive(List<ResponseProductDTO> products) {
+        for (ResponseProductDTO product : products) {
+            deleteProductPhotos(product.getPhotosFolderURL());
+        }
+    }
+
     //TODO: Implement delete from google drive logic
-    public void deleteFromGoogleDrive(String filesPath) {
+    public void deleteProductPhotos(String filesPath) {
         log.info("Deleting photos from google drive directory: {}", filesPath);
         // logic to export to google sheets
         log.info("Photos deleted from google drive");

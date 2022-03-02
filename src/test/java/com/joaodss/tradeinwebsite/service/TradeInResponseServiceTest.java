@@ -5,6 +5,7 @@ import com.joaodss.tradeinwebsite.dao.Product;
 import com.joaodss.tradeinwebsite.dao.Shoes;
 import com.joaodss.tradeinwebsite.dao.TradeInRequest;
 import com.joaodss.tradeinwebsite.dto.ProductDTO;
+import com.joaodss.tradeinwebsite.dto.ResponseTradeInRequestDTO;
 import com.joaodss.tradeinwebsite.dto.ShoesDTO;
 import com.joaodss.tradeinwebsite.dto.TradeInRequestDTO;
 import com.joaodss.tradeinwebsite.repository.TradeInRequestRepository;
@@ -41,7 +42,10 @@ class TradeInResponseServiceTest {
 
     @InjectMocks
     @Spy
-    private TradeInResponseServiceImpl service;
+    private TradeInResponseServiceImpl tradeInResponseService;
+
+    @Mock
+    private GoogleSheetsService googleSheetsService;
 
     @Mock
     private TradeInRequestRepository repository;
@@ -70,6 +74,7 @@ class TradeInResponseServiceTest {
             )
 
     );
+
 
     @BeforeEach
     void setUp() {
@@ -117,27 +122,26 @@ class TradeInResponseServiceTest {
         tradeInRequest2.addProduct(shoes);
     }
 
-    @AfterEach
-    void tearDown() {
-    }
 
     @Test
     @Order(1)
     void testGetAll_useTradeInRequestRepositoryFindAllJoined() {
-        service.getAll();
+        tradeInResponseService.getAll();
 
         verify(repository, times(1)).findAllJoined();
         verifyNoMoreInteractions(repository);
     }
 
+
     @Test
     @Order(2)
     void testGetByEmail_useTradeInRequestRepositoryFindByEmailJoined() {
-        service.getByEmail(anyString());
+        tradeInResponseService.getByEmail(anyString());
 
         verify(repository, times(1)).findByEmailJoined(anyString());
         verifyNoMoreInteractions(repository);
     }
+
 
     @Test
     @Order(3)
@@ -145,7 +149,7 @@ class TradeInResponseServiceTest {
         when(repository.findByIdJoined(anyLong()))
                 .thenReturn(Optional.of(tradeInRequest1));
 
-        service.getById(anyLong());
+        tradeInResponseService.getById(anyLong());
 
         verify(repository, times(1)).findByIdJoined(anyLong());
         verifyNoMoreInteractions(repository);
@@ -157,7 +161,7 @@ class TradeInResponseServiceTest {
         when(repository.findByIdJoined(anyLong()))
                 .thenReturn(Optional.of(tradeInRequest1));
 
-        assertNotNull(service.getById(anyLong()));
+        assertNotNull(tradeInResponseService.getById(anyLong()));
     }
 
     @Test
@@ -166,38 +170,114 @@ class TradeInResponseServiceTest {
         when(repository.findByIdJoined(anyLong()))
                 .thenReturn(Optional.empty());
 
-        assertThrows(NoSuchElementException.class, () -> service.getById(anyLong()));
+        assertThrows(NoSuchElementException.class, () -> tradeInResponseService.getById(anyLong()));
     }
 
-    //TODO: refactor testing and more testing
+
     @Test
     @Order(4)
-    void testCreate_useTradeInRequestRepositoryCreate_useGetById() {
+    void testCreate_useInternalMethods_saveAndExport() {
         when(repository.save(any(TradeInRequest.class)))
                 .thenReturn(tradeInRequest2);
         when(repository.findByIdJoined(anyLong()))
                 .thenReturn(Optional.of(tradeInRequest2));
 
-        service.create(tradeInRequestDTO);
+        tradeInResponseService.create(tradeInRequestDTO);
 
-        verify(repository, times(1)).save(any(TradeInRequest.class));
-        verify(service, times(1)).getById(anyLong());
-        verify(repository, times(1)).findByIdJoined(anyLong());
-        verifyNoMoreInteractions(repository);
+        verify(tradeInResponseService, times(1)).saveToDatabase(any(TradeInRequest.class));
+        verify(tradeInResponseService, times(1)).getById(anyLong());
+        verify(tradeInResponseService, times(1))
+                .exportToGoogleSheets(any(ResponseTradeInRequestDTO.class));
     }
+
+
+    @Test
+    @Order(5)
+    void testSaveToDatabase_useRepositorySave() {
+        when(repository.save(any(TradeInRequest.class)))
+                .thenReturn(tradeInRequest1);
+
+        tradeInResponseService.saveToDatabase(tradeInRequest1);
+
+        verify(repository, times(1)).save(tradeInRequest1);
+        verifyNoMoreInteractions(repository);
+        verifyNoInteractions(googleSheetsService);
+    }
+
+
+    @Test
+    @Order(6)
+    void testExportToGoogleSheets_useGoogleSheetsServiceWriteTradeInRequest() {
+        ResponseTradeInRequestDTO responseTradeInRequestDTO = new ResponseTradeInRequestDTO(tradeInRequest1);
+        tradeInResponseService.exportToGoogleSheets(responseTradeInRequestDTO);
+
+        verify(googleSheetsService, times(1)).writeTradeInRequest(responseTradeInRequestDTO);
+        verifyNoMoreInteractions(googleSheetsService);
+        verifyNoInteractions(repository);
+    }
+
 
     //TODO: refactor testing and more testing
     @Test
-    @Order(5)
-    void testDelete_useTradeInRequestRepositoryDelete_useGetById() {
+    @Order(7)
+    void testDelete_useInternalMethods_deleteFromDatabaseSheetsAndPhotos() {
         when(repository.findByIdJoined(anyLong()))
                 .thenReturn(Optional.of(tradeInRequest1));
 
-        service.delete(1);
+        tradeInResponseService.delete(1);
 
-        verify(service, times(1)).getById(anyLong());
-        verify(repository, times(1)).findByIdJoined(anyLong());
-        verify(repository, times(1)).deleteById(anyLong());
+        verify(tradeInResponseService, times(1)).getById(anyLong());
+        verify(tradeInResponseService, times(1)).deleteFromDatabase(anyLong());
+        verify(tradeInResponseService, times(1)).deleteFromGoogleSheets(anyLong());
+        verify(tradeInResponseService, times(1)).deleteProductsFromGoogleDrive(anyList());
+    }
+
+
+    @Test
+    @Order(8)
+    void testDeleteFromDatabase_useRepository_deleteById() {
+        tradeInResponseService.deleteFromDatabase(1);
+
+        verify(repository, times(1)).deleteById(1L);
         verifyNoMoreInteractions(repository);
     }
+
+
+    @Disabled
+    @Test
+    @Order(9)
+    void testDeleteFromGoogleSheets_useGoogleSheetsService_() {
+
+    }
+
+
+    @Test
+    @Order(10)
+    void testDeleteProductsFromGoogleDrive_useInternalMethods_deleteProductPhotos() {
+        ResponseTradeInRequestDTO responseTradeInRequestDTO = new ResponseTradeInRequestDTO(tradeInRequest1);
+
+        tradeInResponseService.deleteProductsFromGoogleDrive(responseTradeInRequestDTO.getProducts());
+
+        verify(tradeInResponseService, times(1)).deleteProductPhotos(anyString());
+    }
+
+    @Test
+    @Order(10)
+    void testDeleteProductsFromGoogleDrive_useInternalMethods_multipleProducts_multipleRequests() {
+        tradeInRequest1.addProduct(shoes);
+        ResponseTradeInRequestDTO responseTradeInRequestDTO = new ResponseTradeInRequestDTO(tradeInRequest1);
+
+        tradeInResponseService.deleteProductsFromGoogleDrive(responseTradeInRequestDTO.getProducts());
+
+        verify(tradeInResponseService, times(2)).deleteProductPhotos(anyString());
+    }
+
+
+    @Disabled
+    @Test
+    @Order(11)
+    void testDeleteProductPhotos_() {
+    }
+
+
 }
