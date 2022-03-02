@@ -6,6 +6,7 @@ import com.joaodss.tradeinwebsite.dto.ResponseTradeInRequestDTO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +20,10 @@ public class ValueRangeBuilder {
         reset();
     }
 
+    public ValueRangeBuilder addTimeStamp() {
+        addValue(LocalDateTime.now().toString());
+        return this;
+    }
 
     public ValueRangeBuilder addTradeInRequest(ResponseTradeInRequestDTO tradeInRequest) {
         addValue(tradeInRequest.getId());

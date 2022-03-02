@@ -11,11 +11,12 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(OrderAnnotation.class)
 class ValueRangeBuilderTest {
@@ -53,9 +54,25 @@ class ValueRangeBuilderTest {
         );
     }
 
-
     @Test
     @Order(1)
+    void testAddTimeStamp_addNow() {
+        LocalDateTime now = LocalDateTime.now();
+        valueRangeBuilder.addTimeStamp();
+
+        assertTrue(
+                now
+                        .isBefore(LocalDateTime.parse(valueRangeBuilder.getValueRange().getValues().get(0).get(0).toString()))
+        );
+        assertTrue(
+                now.plus(3, ChronoUnit.SECONDS)
+                        .isAfter(LocalDateTime.parse(valueRangeBuilder.getValueRange().getValues().get(0).get(0).toString()))
+        );
+    }
+
+
+    @Test
+    @Order(2)
     void testAddTradeInRequest_tradeInRequestWithMixedValues_addedToList() {
         valueRangeBuilder.addTradeInRequest(responseTradeInRequestDTO);
 
@@ -67,7 +84,7 @@ class ValueRangeBuilderTest {
 
 
     @Test
-    @Order(2)
+    @Order(3)
     void testAddProduct_bagProductWithMixedValues_addedToList() {
         valueRangeBuilder.addProduct(responseProductDTO);
 
@@ -78,7 +95,7 @@ class ValueRangeBuilderTest {
     }
 
     @Test
-    @Order(2)
+    @Order(4)
     void testAddProduct_shoesProductWithMixedValues_addedToList() {
         responseProductDTO.setBagDTO(null);
         responseProductDTO.setShoesDTO(new ShoesDTO((short) 23));
@@ -92,14 +109,14 @@ class ValueRangeBuilderTest {
 
 
     @Test
-    @Order(3)
+    @Order(4)
     void testAddValue_notNullObject_addItToValueRangeList() {
         valueRangeBuilder.addValue(123).addValue("TestTest").addValue(999L);
         assertEquals(List.of(123, "TestTest", 999L), valueRangeBuilder.getValueRange().getValues().get(0));
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     void testAddValue_nullObject_addItToValueRangeList() {
         assertDoesNotThrow(() -> valueRangeBuilder.addValue(null).addValue(null));
         assertEquals(List.of("", ""), valueRangeBuilder.getValueRange().getValues().get(0));
@@ -107,7 +124,7 @@ class ValueRangeBuilderTest {
 
 
     @Test
-    @Order(4)
+    @Order(5)
     void testReset_listWithValues_emptiesList() {
         valueRangeBuilder.addValue(123);
         valueRangeBuilder.reset();
@@ -116,7 +133,7 @@ class ValueRangeBuilderTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     void testReset_initialProperties_doesNothing() {
         ValueRange initialValueRange = valueRangeBuilder.getValueRange();
         valueRangeBuilder.reset();
@@ -126,7 +143,7 @@ class ValueRangeBuilderTest {
 
 
     @Test
-    @Order(5)
+    @Order(6)
     void testBuild_valueRangeCreated_returnValueRange() {
         assertEquals(valueRangeBuilder.getValueRange(), valueRangeBuilder.build());
     }
