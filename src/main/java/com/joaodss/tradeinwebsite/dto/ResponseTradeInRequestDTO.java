@@ -2,7 +2,6 @@ package com.joaodss.tradeinwebsite.dto;
 
 import com.joaodss.tradeinwebsite.dao.Product;
 import com.joaodss.tradeinwebsite.dao.TradeInRequest;
-import com.joaodss.tradeinwebsite.enums.RequestStatus;
 import com.neovisionaries.i18n.CountryCode;
 import lombok.*;
 
@@ -22,7 +21,6 @@ public class ResponseTradeInRequestDTO {
     private String email;
     private String mobileNumber;
     private String shippingCountry;
-    private String requestStatus;
     private List<ResponseProductDTO> products;
 
 
@@ -34,18 +32,13 @@ public class ResponseTradeInRequestDTO {
         this.email = tradeInRequest.getEmail();
         this.mobileNumber = tradeInRequest.getMobileNumber();
         setShippingCountry(tradeInRequest.getShippingCountry());
-        setRequestStatus(tradeInRequest.getRequestStatus());
         setProducts(tradeInRequest.getProducts());
     }
 
 
     // -------------------- Custom Methods --------------------
     private void setShippingCountry(CountryCode countryCode) {
-        this.shippingCountry = countryCode.toString();
-    }
-
-    private void setRequestStatus(RequestStatus requestStatus) {
-        this.requestStatus = requestStatus.toString();
+        this.shippingCountry = countryCode.getAlpha3();
     }
 
     private void setProducts(List<Product> productList) {

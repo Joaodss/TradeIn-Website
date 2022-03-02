@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,29 +13,31 @@ import java.util.List;
 @ToString
 public class ProductDTO {
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "Category is required.")
+    @NotBlank(message = "Category is required.")
     private String category;
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "Brand is required.")
+    @NotBlank(message = "Brand is required.")
     private String brand;
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "Model is required.")
+    @NotBlank(message = "Model is required.")
     private String model;
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "Condition is required.")
+    @NotBlank(message = "Condition is required.")
     private String condition;
 
-    @NotNull
+    @NotNull(message = "Description cannot be null.")
     private String details;
+
+    @NotNull(message = "Photo Folder URL is required.")
+    @NotBlank(message = "Photo Folder URL is required.")
+    private String photosFolderURL;
 
     private BagDTO bagDTO;
 
     private ShoesDTO shoesDTO;
-
-    private List<String> blemishPhotos;
 
 }

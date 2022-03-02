@@ -4,9 +4,8 @@ import com.joaodss.tradeinwebsite.dao.Product;
 import com.joaodss.tradeinwebsite.enums.Brand;
 import com.joaodss.tradeinwebsite.enums.Category;
 import com.joaodss.tradeinwebsite.enums.Condition;
+import com.joaodss.tradeinwebsite.enums.RequestStatus;
 import lombok.*;
-
-import java.util.List;
 
 import static com.joaodss.tradeinwebsite.enums.Category.BAG;
 import static com.joaodss.tradeinwebsite.enums.Category.SHOES;
@@ -19,49 +18,55 @@ import static com.joaodss.tradeinwebsite.enums.Category.SHOES;
 @ToString
 public class ResponseProductDTO {
     private Long id;
+    private String requestStatus;
     private String category;
     private String brand;
     private String model;
     private String condition;
     private String details;
+    private String photosFolderURL;
     private BagDTO bagDTO;
     private ShoesDTO shoesDTO;
-    private List<String> blemishPhotos;
 
 
     // -------------------- Custom Constructor --------------------
     public ResponseProductDTO(Product product) {
         this.id = product.getId();
-        setCategory(product.getCategory());
-        setBrand(product.getBrand());
+        setRequestStatusFrom(product.getRequestStatus());
+        setCategoryFrom(product.getCategory());
+        setBrandFrom(product.getBrand());
         this.model = product.getModel();
-        setCondition(product.getCondition());
+        setConditionFrom(product.getCondition());
         this.details = product.getDetails();
-        setBagDTO(product);
-        setShoesDTO(product);
-        this.blemishPhotos = product.getBlemishPhotos();
+        setBagDTOFrom(product);
+        setShoesDTOFrom(product);
+        this.photosFolderURL = product.getPhotosFolderURL();
     }
 
 
     // -------------------- Custom Methods --------------------
-    public void setCategory(Category category) {
+    private void setRequestStatusFrom(RequestStatus requestStatus) {
+        this.requestStatus = requestStatus.toString();
+    }
+
+    public void setCategoryFrom(Category category) {
         this.category = category.toString();
     }
 
-    public void setBrand(Brand brand) {
+    public void setBrandFrom(Brand brand) {
         this.brand = brand.toString();
     }
 
-    public void setCondition(Condition condition) {
+    public void setConditionFrom(Condition condition) {
         this.condition = condition.toString();
     }
 
-    public void setBagDTO(Product product) {
+    public void setBagDTOFrom(Product product) {
         if (product.getCategory().equals(BAG))
             this.bagDTO = new BagDTO(product);
     }
 
-    public void setShoesDTO(Product product) {
+    public void setShoesDTOFrom(Product product) {
         if (product.getCategory().equals(SHOES))
             this.shoesDTO = new ShoesDTO(product);
     }

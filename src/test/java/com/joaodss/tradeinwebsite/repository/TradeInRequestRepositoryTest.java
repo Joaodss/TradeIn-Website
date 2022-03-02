@@ -13,11 +13,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.joaodss.tradeinwebsite.enums.BagExtra.DUSTBAG;
 import static com.joaodss.tradeinwebsite.enums.BagSize.MEDIUM;
 import static com.joaodss.tradeinwebsite.enums.Brand.CHANEL;
 import static com.joaodss.tradeinwebsite.enums.Brand.GUCCI;
@@ -39,37 +39,38 @@ class TradeInRequestRepositoryTest {
     private final TradeInRequestRepository tradeInRequestRepository;
     private final ProductRepository productRepository;
 
-    private Product bag;
-    private Product shoes;
-    private TradeInRequest tradeInRequest1;
-    private TradeInRequest tradeInRequest2;
-    private TradeInRequest newTradeInRequest = new TradeInRequest(
+    private final TradeInRequest newTradeInRequest = new TradeInRequest(
             "Maria",
             "Doe",
             "maria.doe@email.com",
             "9999999999",
-            ES,
-            PENDING
+            ES
     );
-    private Product newBag = new Bag(
+    private final Product newBag = new Bag(
+            PENDING,
             BAG,
             GUCCI,
             "Simple bag",
             USED,
             "No details",
-            List.of("onePhotoPath", "twoPhotoPath"),
+            "link to photos",
             MEDIUM,
-            Set.of(DUSTBAG)
+            Set.of()
     );
-    private Product newShoes = new Shoes(
+    private final Product newShoes = new Shoes(
+            PENDING,
             SHOES,
             CHANEL,
             "Simple shoes",
             GOOD,
             "No details",
-            List.of("onePhotoPath"),
+            "link to photos",
             (short) 36
     );
+    private Product bag;
+    private Product shoes;
+    private TradeInRequest tradeInRequest1;
+    private TradeInRequest tradeInRequest2;
 
     @BeforeEach
     void setUp() {
@@ -78,16 +79,16 @@ class TradeInRequestRepositoryTest {
                 "Doe",
                 "john.doe@email.com",
                 "12345678",
-                US,
-                PENDING
+                US
         );
         bag = new Bag(
+                PENDING,
                 BAG,
                 GUCCI,
                 "Simple bag",
                 USED,
                 "No details",
-                List.of(),
+                "link",
                 MEDIUM,
                 Set.of()
         );
@@ -99,16 +100,16 @@ class TradeInRequestRepositoryTest {
                 "Doe",
                 "robin.doe@email.com",
                 "987654321",
-                PT,
-                PENDING
+                PT
         );
         shoes = new Shoes(
+                PENDING,
                 SHOES,
                 CHANEL,
                 "Simple shoes",
                 GOOD,
                 "No details",
-                List.of(),
+                "link",
                 (short) 36
         );
         tradeInRequest2.addProduct(shoes);
@@ -195,7 +196,9 @@ class TradeInRequestRepositoryTest {
     @Test
     @Order(5)
     void testReadTradeInRequest_AllJoined_returnObjectsWithChild() {
-        List<TradeInRequest> elements = tradeInRequestRepository.findAllJoined();
+        List<TradeInRequest> elements =
+                new ArrayList<>(tradeInRequestRepository.findAllJoined());
+
         assertEquals(List.of(bag), elements.get(0).getProducts());
         assertEquals(List.of(shoes), elements.get(1).getProducts());
     }
@@ -211,7 +214,8 @@ class TradeInRequestRepositoryTest {
     @Test
     @Order(5)
     void testReadTradeInRequest_byParentEmailJoined_returnObjectWithChild() {
-        List<TradeInRequest> elements = tradeInRequestRepository.findByEmailJoined("john.doe@email.com");
+        List<TradeInRequest> elements =
+                new ArrayList<>(tradeInRequestRepository.findByEmailJoined("john.doe@email.com"));
         assertEquals(List.of(bag), elements.get(0).getProducts());
     }
 

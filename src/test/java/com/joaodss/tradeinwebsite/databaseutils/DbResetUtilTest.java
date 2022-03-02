@@ -13,7 +13,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Set;
 
 import static com.joaodss.tradeinwebsite.enums.BagSize.MEDIUM;
@@ -50,16 +49,16 @@ class DbResetUtilTest {
                 "Doe",
                 "john.doe@email.com",
                 "12345678",
-                US,
-                PENDING
+                US
         );
         bag = new Bag(
+                PENDING,
                 BAG,
                 GUCCI,
                 "Simple bag",
                 USED,
                 "No details",
-                List.of(),
+                "link",
                 MEDIUM,
                 Set.of()
         );
@@ -71,16 +70,16 @@ class DbResetUtilTest {
                 "Doe",
                 "robin.doe@email.com",
                 "987654321",
-                PT,
-                PENDING
+                PT
         );
         shoes = new Shoes(
+                PENDING,
                 SHOES,
                 CHANEL,
                 "Simple shoes",
                 GOOD,
                 "No details",
-                List.of(),
+                "link",
                 (short) 36
         );
         tradeInRequest2.addProduct(shoes);
