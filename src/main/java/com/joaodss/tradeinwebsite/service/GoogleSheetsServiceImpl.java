@@ -18,7 +18,7 @@ import java.util.List;
 public class GoogleSheetsServiceImpl implements GoogleSheetsService {
     private final String googleSheetId = "1JR36PCKmBv3GSl1EIy-DvlOfauXEAYk2raTBc88cnvY";
     private final String sheetName = "TradeInRequests";
-    private Sheets sheetsService;
+    private final Sheets sheetsService;
 
     public GoogleSheetsServiceImpl() throws GeneralSecurityException, IOException {
         this.sheetsService = GoogleSheetsUtil.getSheetsService();

@@ -39,10 +39,6 @@ class TradeInRequestRepositoryTest {
     private final TradeInRequestRepository tradeInRequestRepository;
     private final ProductRepository productRepository;
 
-    private Product bag;
-    private Product shoes;
-    private TradeInRequest tradeInRequest1;
-    private TradeInRequest tradeInRequest2;
     private final TradeInRequest newTradeInRequest = new TradeInRequest(
             "Maria",
             "Doe",
@@ -71,6 +67,10 @@ class TradeInRequestRepositoryTest {
             "link to photos",
             (short) 36
     );
+    private Product bag;
+    private Product shoes;
+    private TradeInRequest tradeInRequest1;
+    private TradeInRequest tradeInRequest2;
 
     @BeforeEach
     void setUp() {

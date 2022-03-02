@@ -13,7 +13,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Set;
 
 import static com.joaodss.tradeinwebsite.enums.BagSize.MEDIUM;

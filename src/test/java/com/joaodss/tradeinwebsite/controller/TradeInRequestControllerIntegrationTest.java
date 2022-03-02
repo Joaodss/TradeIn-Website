@@ -57,16 +57,20 @@ class TradeInRequestControllerIntegrationTest {
     private final WebApplicationContext webApplicationContext;
     private final TradeInRequestRepository tradeInRequestRepository;
     private final ProductRepository productRepository;
+
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final String baseUrl = "/api/v1/trade-in-request";
 
     private MockMvc mockMvc;
 
+
+    private String tradeInRequestDTOBody;
+
     private Product bag;
     private Product shoes;
     private TradeInRequest tradeInRequest1;
     private TradeInRequest tradeInRequest2;
-    private Product newBag = new Bag(
+    private final Product newBag = new Bag(
             PENDING,
             BAG,
             GUCCI,
@@ -77,7 +81,7 @@ class TradeInRequestControllerIntegrationTest {
             MEDIUM,
             Set.of(BOX, MIRROR)
     );
-    private Product newShoes = new Shoes(
+    private final Product newShoes = new Shoes(
             PENDING,
             SHOES,
             CHANEL,
@@ -87,7 +91,7 @@ class TradeInRequestControllerIntegrationTest {
             "link somewhere",
             (short) 36
     );
-    private TradeInRequestDTO newTradeInRequestDTO = new TradeInRequestDTO(
+    private final TradeInRequestDTO newTradeInRequestDTO = new TradeInRequestDTO(
             "Jason",
             "Doe",
             "jasson.doe@email.com",
@@ -122,7 +126,6 @@ class TradeInRequestControllerIntegrationTest {
             )
 
     );
-    String tradeInRequestDTOBody;
 
 
     @BeforeEach

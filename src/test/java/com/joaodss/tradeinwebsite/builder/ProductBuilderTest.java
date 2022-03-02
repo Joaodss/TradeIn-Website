@@ -23,9 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(OrderAnnotation.class)
 class ProductBuilderTest {
-    private ProductBuilder productBuilder;
 
-    private ProductDTO bagProductDTO;
     private final ProductDTO shoesProductDTO = new ProductDTO(
             "Shoes",
             "Gucci",
@@ -46,7 +44,8 @@ class ProductBuilderTest {
             "link",
             (short) 36
     );
-
+    private ProductBuilder productBuilder;
+    private ProductDTO bagProductDTO;
 
     @BeforeEach
     void setUp() {

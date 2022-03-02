@@ -54,7 +54,7 @@ class TradeInResponseServiceTest {
     private Product shoes;
     private TradeInRequest tradeInRequest1;
     private TradeInRequest tradeInRequest2;
-    private TradeInRequestDTO tradeInRequestDTO = new TradeInRequestDTO(
+    private final TradeInRequestDTO tradeInRequestDTO = new TradeInRequestDTO(
             "Robin",
             "Doe",
             "robin.doe@email.com",

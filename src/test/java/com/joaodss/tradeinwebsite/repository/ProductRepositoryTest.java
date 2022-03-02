@@ -38,17 +38,6 @@ class ProductRepositoryTest {
     private final TradeInRequestRepository tradeInRequestRepository;
     private final ProductRepository productRepository;
 
-    private Product bag;
-    private Product shoes;
-    private TradeInRequest tradeInRequest1;
-    private TradeInRequest tradeInRequest2;
-    private TradeInRequest newTradeInRequest = new TradeInRequest(
-            "Maria",
-            "Doe",
-            "maria.doe@email.com",
-            "9999999999",
-            ES
-    );
     private final Product newBag = new Bag(
             PENDING,
             BAG,
@@ -70,6 +59,18 @@ class ProductRepositoryTest {
             "link to photos",
             (short) 36
     );
+    private final TradeInRequest newTradeInRequest = new TradeInRequest(
+            "Maria",
+            "Doe",
+            "maria.doe@email.com",
+            "9999999999",
+            ES
+    );
+    private Product bag;
+    private Product shoes;
+    private TradeInRequest tradeInRequest1;
+    private TradeInRequest tradeInRequest2;
+
 
     @BeforeEach
     void setUp() {
