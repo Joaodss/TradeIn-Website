@@ -52,6 +52,7 @@ public class GoogleSheetsServiceImpl implements GoogleSheetsService {
         for (ResponseProductDTO product : responseTradeInRequestDTO.getProducts()) {
             ValueRangeBuilder valueRangeBuilder = new ValueRangeBuilder();
             ValueRange valueRange = valueRangeBuilder
+                    .addTimeStamp()
                     .addTradeInRequest(responseTradeInRequestDTO)
                     .addProduct(product)
                     .build();

@@ -3,8 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-/tokens
-src/main/resources/credentials.json
+src/main/resources/service_credentials.json
 
 ### STS ###
 .apt_generated
