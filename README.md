@@ -11,8 +11,6 @@
 - MySQL
 
 ## Project Setup
-
-### Database
  
  - Clone the repository repository:
   - <https://github.com/Joaodss/TradeIn-Website-client>
