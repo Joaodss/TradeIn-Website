@@ -13,7 +13,7 @@
 ## Project Setup
  
  - Clone the repository repository:
-  - <https://github.com/Joaodss/TradeIn-Website-client>
+  - <https://github.com/Joaodss/TradeIn-Website>
 
 - Setup the following database name and user, or set up your database by changing the configuration in the `application.properties` file
 
