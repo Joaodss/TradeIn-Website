@@ -1,3 +1,5 @@
+USE TradeIn;
+
 CREATE TABLE IF NOT EXISTS `TradeIn`.`trade_in_request`
 (
     `id`               BIGINT       NOT NULL AUTO_INCREMENT,
