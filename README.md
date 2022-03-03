@@ -28,7 +28,9 @@ FLUSH PRIVILEGES;
 ```
 
 - Create google Service account creadential and save the credential `service_credentials.json` at `\src\main\resources\`
+
 - Run the following command to start each spring application: `mvn spring-boot:run` (rquires Java 17 and Maven), or by using an IDE
+
 - The application will be available at [http://localhost:8080/](http://localhost:8080/) (changin this value will throw CORS error)
 
 
