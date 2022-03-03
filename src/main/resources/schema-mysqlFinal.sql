@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `TradeIn_dev`.`trade_in_request`
+CREATE TABLE IF NOT EXISTS `TradeIn`.`trade_in_request`
 (
     `id`               BIGINT       NOT NULL AUTO_INCREMENT,
     `email`            VARCHAR(255) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `TradeIn_dev`.`trade_in_request`
     PRIMARY KEY (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `TradeIn_dev`.`product`
+CREATE TABLE IF NOT EXISTS `TradeIn`.`product`
 (
     `id`                  BIGINT       NOT NULL AUTO_INCREMENT,
     `brand`               VARCHAR(255) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `TradeIn_dev`.`product`
 );
 
 
-CREATE TABLE IF NOT EXISTS `TradeIn_dev`.`shoes`
+CREATE TABLE IF NOT EXISTS `TradeIn`.`shoes`
 (
     `shoes_size` SMALLINT NOT NULL,
     `id`         BIGINT   NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `TradeIn_dev`.`shoes`
     FOREIGN KEY (`id`) REFERENCES `TradeIn_dev`.`product` (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `TradeIn_dev`.`bag`
+CREATE TABLE IF NOT EXISTS `TradeIn`.`bag`
 (
     `bag_size` VARCHAR(255) NOT NULL,
     `id`       BIGINT       NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `TradeIn_dev`.`bag`
 );
 
 
-CREATE TABLE IF NOT EXISTS `TradeIn_dev`.`bag_extra`
+CREATE TABLE IF NOT EXISTS `TradeIn`.`bag_extra`
 (
     `bag_id` BIGINT       NOT NULL,
     `extra`  VARCHAR(255) NULL DEFAULT NULL,
