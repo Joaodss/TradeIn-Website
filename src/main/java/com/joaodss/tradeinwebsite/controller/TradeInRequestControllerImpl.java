@@ -15,7 +15,7 @@ import java.util.NoSuchElementException;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("http://localhost")
 @RequestMapping("/api/v1/trade-in-request")
 @RequiredArgsConstructor
 @Slf4j
