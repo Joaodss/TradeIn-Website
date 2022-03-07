@@ -15,8 +15,7 @@ import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.EAGER;
 
 @Entity
-@Table(name = "bag")
-@PrimaryKeyJoinColumn(name = "id")
+@DiscriminatorValue("BAG")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

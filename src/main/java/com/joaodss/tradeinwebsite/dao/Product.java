@@ -1,8 +1,6 @@
 package com.joaodss.tradeinwebsite.dao;
 
 import com.joaodss.tradeinwebsite.dto.ProductDTO;
-import com.joaodss.tradeinwebsite.enums.Brand;
-import com.joaodss.tradeinwebsite.enums.Category;
 import com.joaodss.tradeinwebsite.enums.Condition;
 import com.joaodss.tradeinwebsite.enums.RequestStatus;
 import lombok.*;
@@ -14,13 +12,15 @@ import java.util.Objects;
 import static com.joaodss.tradeinwebsite.enums.RequestStatus.PENDING;
 import static com.joaodss.tradeinwebsite.enums.RequestStatus.valueOf;
 import static com.joaodss.tradeinwebsite.utils.EnumsUtil.enumFormat;
-import static javax.persistence.EnumType.STRING;
+import static javax.persistence.DiscriminatorType.STRING;
+import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.IDENTITY;
-import static javax.persistence.InheritanceType.JOINED;
+import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
 @Entity
-@Inheritance(strategy = JOINED)
 @Table(name = "product")
+@Inheritance(strategy = SINGLE_TABLE)
+@DiscriminatorColumn(name = "product_type", discriminatorType = STRING)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -34,26 +34,26 @@ public abstract class Product {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = {}, fetch = EAGER)
     @JoinColumn(name = "trade_in_request_id", nullable = false)
     private TradeInRequest tradeInRequest;
 
-    @Enumerated(STRING)
+    @Enumerated(EnumType.STRING)
     @Column(name = "request_status", nullable = false)
     private RequestStatus requestStatus;
 
-    @Enumerated(STRING)
-    @Column(name = "category", nullable = false)
+    @ManyToOne(cascade = {}, fetch = EAGER)
+    @JoinColumn(name = "category", nullable = false)
     private Category category;
 
-    @Enumerated(STRING)
-    @Column(name = "brand", nullable = false)
+    @ManyToOne(cascade = {}, fetch = EAGER)
+    @JoinColumn(name = "brand", nullable = false)
     private Brand brand;
 
     @Column(name = "model", nullable = false)
     private String model;
 
-    @Enumerated(STRING)
+    @Enumerated(EnumType.STRING)
     @Column(name = "product_condition", nullable = false)
     private Condition condition;
 
@@ -102,11 +102,12 @@ public abstract class Product {
     }
 
     public void setCategoryFrom(String category) {
-        this.category = Category.valueOf(enumFormat(category));
+
+
     }
 
     public void setBrandFrom(String brand) {
-        this.brand = Brand.valueOf(enumFormat(brand));
+
     }
 
     public void setConditionFrom(String condition) {

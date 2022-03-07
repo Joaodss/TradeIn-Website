@@ -1,22 +1,16 @@
 package com.joaodss.tradeinwebsite.dao;
 
 import com.joaodss.tradeinwebsite.dto.ProductDTO;
-import com.joaodss.tradeinwebsite.enums.Brand;
-import com.joaodss.tradeinwebsite.enums.Category;
 import com.joaodss.tradeinwebsite.enums.Condition;
 import com.joaodss.tradeinwebsite.enums.RequestStatus;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "shoes")
-@PrimaryKeyJoinColumn(name = "id")
+@DiscriminatorValue("SHOES")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

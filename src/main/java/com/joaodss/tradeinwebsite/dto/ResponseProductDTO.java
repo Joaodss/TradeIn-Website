@@ -33,8 +33,8 @@ public class ResponseProductDTO {
     public ResponseProductDTO(Product product) {
         this.id = product.getId();
         setRequestStatusFrom(product.getRequestStatus());
-        setCategoryFrom(product.getCategory());
-        setBrandFrom(product.getBrand());
+//        setCategoryFrom(product.getCategory());
+//        setBrandFrom(product.getBrand());
         this.model = product.getModel();
         setConditionFrom(product.getCondition());
         this.details = product.getDetails();
@@ -50,11 +50,11 @@ public class ResponseProductDTO {
     }
 
     public void setCategoryFrom(Category category) {
-        this.category = category.toString();
+
     }
 
     public void setBrandFrom(Brand brand) {
-        this.brand = brand.toString();
+
     }
 
     public void setConditionFrom(Condition condition) {
