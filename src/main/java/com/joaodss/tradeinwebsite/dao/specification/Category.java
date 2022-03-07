@@ -1,4 +1,4 @@
-package com.joaodss.tradeinwebsite.dao;
+package com.joaodss.tradeinwebsite.dao.specification;
 
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -12,14 +12,14 @@ import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "brand")
+@Table(name = "category")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
 @Slf4j
-public class Brand {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -27,21 +27,21 @@ public class Brand {
     private Long id;
 
     @Column(name = "name", unique = true, nullable = false)
-    private String brandName;
+    private String categoryName;
 
-    @OneToMany(mappedBy = "brand", cascade = {}, orphanRemoval = true, fetch = LAZY)
+    @OneToMany(mappedBy = "category", cascade = {}, orphanRemoval = true, fetch = LAZY)
     @ToString.Exclude
     private Set<CategoryBrandSpecification> specification = new HashSet<>();
 
 
     // -------------------- Custom Constructor --------------------
-    public Brand(String brandName, Set<CategoryBrandSpecification> specification) {
-        this.brandName = brandName;
+    public Category(String categoryName, Set<CategoryBrandSpecification> specification) {
+        this.categoryName = categoryName;
         this.specification = specification;
     }
 
-    public Brand(String brandName) {
-        this.brandName = brandName;
+    public Category(String categoryName) {
+        this.categoryName = categoryName;
     }
 
 
@@ -51,15 +51,15 @@ public class Brand {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Brand brand = (Brand) o;
-        return Objects.equals(id, brand.id) &&
-                Objects.equals(brandName, brand.brandName);
+        Category category = (Category) o;
+        return Objects.equals(id, category.id) &&
+                Objects.equals(categoryName, category.categoryName);
     }
 
     @Generated
     @Override
     public int hashCode() {
-        return Objects.hash(id, brandName);
+        return Objects.hash(id, categoryName);
     }
 
 }

@@ -1,6 +1,8 @@
-package com.joaodss.tradeinwebsite.dao;
+package com.joaodss.tradeinwebsite.dao.request;
 
-import com.joaodss.tradeinwebsite.dto.ProductDTO;
+import com.joaodss.tradeinwebsite.dao.specification.Brand;
+import com.joaodss.tradeinwebsite.dao.specification.Category;
+import com.joaodss.tradeinwebsite.dto.request.ProductDTO;
 import com.joaodss.tradeinwebsite.enums.Condition;
 import com.joaodss.tradeinwebsite.enums.RequestStatus;
 import lombok.*;

@@ -1,6 +1,6 @@
-package com.joaodss.tradeinwebsite.dto;
+package com.joaodss.tradeinwebsite.dto.request;
 
-import com.joaodss.tradeinwebsite.dao.Product;
+import com.joaodss.tradeinwebsite.dao.request.Product;
 import com.joaodss.tradeinwebsite.enums.Brand;
 import com.joaodss.tradeinwebsite.enums.Category;
 import com.joaodss.tradeinwebsite.enums.Condition;

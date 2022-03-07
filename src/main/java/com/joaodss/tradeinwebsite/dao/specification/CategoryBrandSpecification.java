@@ -1,4 +1,4 @@
-package com.joaodss.tradeinwebsite.dao;
+package com.joaodss.tradeinwebsite.dao.specification;
 
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
+import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -26,11 +27,11 @@ public class CategoryBrandSpecification {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @ManyToOne(cascade = {PERSIST}, optional = false, fetch = EAGER)
+    @ManyToOne(cascade = {MERGE}, optional = false, fetch = EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne(cascade = {PERSIST}, optional = false, fetch = EAGER)
+    @ManyToOne(cascade = {MERGE}, optional = false, fetch = EAGER)
     @JoinColumn(name = "brand_id")
     private Brand brand;
 

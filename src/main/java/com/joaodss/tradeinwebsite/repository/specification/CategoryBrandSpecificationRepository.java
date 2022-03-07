@@ -1,6 +1,6 @@
-package com.joaodss.tradeinwebsite.repository;
+package com.joaodss.tradeinwebsite.repository.specification;
 
-import com.joaodss.tradeinwebsite.dao.CategoryBrandSpecification;
+import com.joaodss.tradeinwebsite.dao.specification.CategoryBrandSpecification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

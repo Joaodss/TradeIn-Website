@@ -1,10 +1,12 @@
-package com.joaodss.tradeinwebsite.service;
+package com.joaodss.tradeinwebsite.service.impl;
 
-import com.joaodss.tradeinwebsite.dao.TradeInRequest;
-import com.joaodss.tradeinwebsite.dto.ResponseProductDTO;
-import com.joaodss.tradeinwebsite.dto.ResponseTradeInRequestDTO;
-import com.joaodss.tradeinwebsite.dto.TradeInRequestDTO;
-import com.joaodss.tradeinwebsite.repository.TradeInRequestRepository;
+import com.joaodss.tradeinwebsite.dao.request.TradeInRequest;
+import com.joaodss.tradeinwebsite.dto.request.ResponseProductDTO;
+import com.joaodss.tradeinwebsite.dto.request.ResponseTradeInRequestDTO;
+import com.joaodss.tradeinwebsite.dto.request.TradeInRequestDTO;
+import com.joaodss.tradeinwebsite.repository.request.TradeInRequestRepository;
+import com.joaodss.tradeinwebsite.service.GoogleSheetsService;
+import com.joaodss.tradeinwebsite.service.TradeInResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

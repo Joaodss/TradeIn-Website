@@ -1,4 +1,4 @@
-package com.joaodss.tradeinwebsite.dto;
+package com.joaodss.tradeinwebsite.dto.request;
 
 import lombok.*;
 

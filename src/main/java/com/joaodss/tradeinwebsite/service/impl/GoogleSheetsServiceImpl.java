@@ -1,10 +1,11 @@
-package com.joaodss.tradeinwebsite.service;
+package com.joaodss.tradeinwebsite.service.impl;
 
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import com.joaodss.tradeinwebsite.builder.ValueRangeBuilder;
-import com.joaodss.tradeinwebsite.dto.ResponseProductDTO;
-import com.joaodss.tradeinwebsite.dto.ResponseTradeInRequestDTO;
+import com.joaodss.tradeinwebsite.dto.request.ResponseProductDTO;
+import com.joaodss.tradeinwebsite.dto.request.ResponseTradeInRequestDTO;
+import com.joaodss.tradeinwebsite.service.GoogleSheetsService;
 import com.joaodss.tradeinwebsite.utils.GoogleSheetsUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

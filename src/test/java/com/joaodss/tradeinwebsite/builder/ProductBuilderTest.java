@@ -1,11 +1,11 @@
 package com.joaodss.tradeinwebsite.builder;
 
-import com.joaodss.tradeinwebsite.dao.Bag;
-import com.joaodss.tradeinwebsite.dao.Product;
-import com.joaodss.tradeinwebsite.dao.Shoes;
-import com.joaodss.tradeinwebsite.dto.BagDTO;
-import com.joaodss.tradeinwebsite.dto.ProductDTO;
-import com.joaodss.tradeinwebsite.dto.ShoesDTO;
+import com.joaodss.tradeinwebsite.dao.request.Bag;
+import com.joaodss.tradeinwebsite.dao.request.Product;
+import com.joaodss.tradeinwebsite.dao.request.Shoes;
+import com.joaodss.tradeinwebsite.dto.request.BagDTO;
+import com.joaodss.tradeinwebsite.dto.request.ProductDTO;
+import com.joaodss.tradeinwebsite.dto.request.ShoesDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;

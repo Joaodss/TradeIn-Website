@@ -1,9 +1,9 @@
 package com.joaodss.tradeinwebsite.service;
 
-import com.joaodss.tradeinwebsite.dao.TradeInRequest;
-import com.joaodss.tradeinwebsite.dto.ResponseProductDTO;
-import com.joaodss.tradeinwebsite.dto.ResponseTradeInRequestDTO;
-import com.joaodss.tradeinwebsite.dto.TradeInRequestDTO;
+import com.joaodss.tradeinwebsite.dao.request.TradeInRequest;
+import com.joaodss.tradeinwebsite.dto.request.ResponseProductDTO;
+import com.joaodss.tradeinwebsite.dto.request.ResponseTradeInRequestDTO;
+import com.joaodss.tradeinwebsite.dto.request.TradeInRequestDTO;
 
 import java.util.List;
 

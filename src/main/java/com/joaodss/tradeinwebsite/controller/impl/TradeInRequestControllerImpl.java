@@ -1,7 +1,8 @@
-package com.joaodss.tradeinwebsite.controller;
+package com.joaodss.tradeinwebsite.controller.impl;
 
-import com.joaodss.tradeinwebsite.dto.ResponseTradeInRequestDTO;
-import com.joaodss.tradeinwebsite.dto.TradeInRequestDTO;
+import com.joaodss.tradeinwebsite.controller.TradeInRequestController;
+import com.joaodss.tradeinwebsite.dto.request.ResponseTradeInRequestDTO;
+import com.joaodss.tradeinwebsite.dto.request.TradeInRequestDTO;
 import com.joaodss.tradeinwebsite.service.TradeInResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

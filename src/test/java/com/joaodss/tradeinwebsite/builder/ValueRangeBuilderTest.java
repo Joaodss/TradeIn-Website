@@ -1,10 +1,10 @@
 package com.joaodss.tradeinwebsite.builder;
 
 import com.google.api.services.sheets.v4.model.ValueRange;
-import com.joaodss.tradeinwebsite.dto.BagDTO;
-import com.joaodss.tradeinwebsite.dto.ResponseProductDTO;
-import com.joaodss.tradeinwebsite.dto.ResponseTradeInRequestDTO;
-import com.joaodss.tradeinwebsite.dto.ShoesDTO;
+import com.joaodss.tradeinwebsite.dto.request.BagDTO;
+import com.joaodss.tradeinwebsite.dto.request.ResponseProductDTO;
+import com.joaodss.tradeinwebsite.dto.request.ResponseTradeInRequestDTO;
+import com.joaodss.tradeinwebsite.dto.request.ShoesDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;

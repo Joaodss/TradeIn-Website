@@ -1,7 +1,7 @@
-package com.joaodss.tradeinwebsite.dto;
+package com.joaodss.tradeinwebsite.dto.request;
 
-import com.joaodss.tradeinwebsite.dao.Product;
-import com.joaodss.tradeinwebsite.dao.Shoes;
+import com.joaodss.tradeinwebsite.dao.request.Product;
+import com.joaodss.tradeinwebsite.dao.request.Shoes;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;

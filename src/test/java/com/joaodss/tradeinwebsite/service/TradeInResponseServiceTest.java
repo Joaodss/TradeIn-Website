@@ -1,14 +1,15 @@
 package com.joaodss.tradeinwebsite.service;
 
-import com.joaodss.tradeinwebsite.dao.Bag;
-import com.joaodss.tradeinwebsite.dao.Product;
-import com.joaodss.tradeinwebsite.dao.Shoes;
-import com.joaodss.tradeinwebsite.dao.TradeInRequest;
-import com.joaodss.tradeinwebsite.dto.ProductDTO;
-import com.joaodss.tradeinwebsite.dto.ResponseTradeInRequestDTO;
-import com.joaodss.tradeinwebsite.dto.ShoesDTO;
-import com.joaodss.tradeinwebsite.dto.TradeInRequestDTO;
-import com.joaodss.tradeinwebsite.repository.TradeInRequestRepository;
+import com.joaodss.tradeinwebsite.dao.request.Bag;
+import com.joaodss.tradeinwebsite.dao.request.Product;
+import com.joaodss.tradeinwebsite.dao.request.Shoes;
+import com.joaodss.tradeinwebsite.dao.request.TradeInRequest;
+import com.joaodss.tradeinwebsite.dto.request.ProductDTO;
+import com.joaodss.tradeinwebsite.dto.request.ResponseTradeInRequestDTO;
+import com.joaodss.tradeinwebsite.dto.request.ShoesDTO;
+import com.joaodss.tradeinwebsite.dto.request.TradeInRequestDTO;
+import com.joaodss.tradeinwebsite.repository.request.TradeInRequestRepository;
+import com.joaodss.tradeinwebsite.service.impl.TradeInResponseServiceImpl;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

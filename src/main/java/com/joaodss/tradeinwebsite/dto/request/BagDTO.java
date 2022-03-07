@@ -1,7 +1,7 @@
-package com.joaodss.tradeinwebsite.dto;
+package com.joaodss.tradeinwebsite.dto.request;
 
-import com.joaodss.tradeinwebsite.dao.Bag;
-import com.joaodss.tradeinwebsite.dao.Product;
+import com.joaodss.tradeinwebsite.dao.request.Bag;
+import com.joaodss.tradeinwebsite.dao.request.Product;
 import com.joaodss.tradeinwebsite.enums.BagExtra;
 import com.joaodss.tradeinwebsite.enums.BagSize;
 import lombok.*;

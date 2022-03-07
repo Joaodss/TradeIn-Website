@@ -1,8 +1,8 @@
 package com.joaodss.tradeinwebsite.builder;
 
 import com.google.api.services.sheets.v4.model.ValueRange;
-import com.joaodss.tradeinwebsite.dto.ResponseProductDTO;
-import com.joaodss.tradeinwebsite.dto.ResponseTradeInRequestDTO;
+import com.joaodss.tradeinwebsite.dto.request.ResponseProductDTO;
+import com.joaodss.tradeinwebsite.dto.request.ResponseTradeInRequestDTO;
 import lombok.Getter;
 import lombok.Setter;
 

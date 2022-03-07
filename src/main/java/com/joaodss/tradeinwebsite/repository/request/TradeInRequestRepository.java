@@ -1,6 +1,6 @@
-package com.joaodss.tradeinwebsite.repository;
+package com.joaodss.tradeinwebsite.repository.request;
 
-import com.joaodss.tradeinwebsite.dao.TradeInRequest;
+import com.joaodss.tradeinwebsite.dao.request.TradeInRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,8 @@
-package com.joaodss.tradeinwebsite.dao;
+package com.joaodss.tradeinwebsite.dao.request;
 
-import com.joaodss.tradeinwebsite.dto.ProductDTO;
+import com.joaodss.tradeinwebsite.dao.specification.Brand;
+import com.joaodss.tradeinwebsite.dao.specification.Category;
+import com.joaodss.tradeinwebsite.dto.request.ProductDTO;
 import com.joaodss.tradeinwebsite.enums.Condition;
 import com.joaodss.tradeinwebsite.enums.RequestStatus;
 import lombok.*;
@@ -13,7 +15,7 @@ import static com.joaodss.tradeinwebsite.enums.RequestStatus.PENDING;
 import static com.joaodss.tradeinwebsite.enums.RequestStatus.valueOf;
 import static com.joaodss.tradeinwebsite.utils.EnumsUtil.enumFormat;
 import static javax.persistence.DiscriminatorType.STRING;
-import static javax.persistence.FetchType.*;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.IDENTITY;
 import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
@@ -87,8 +89,7 @@ public abstract class Product {
     public Product(ProductDTO productDTO) {
         log.info("Constructing Product from DTO");
         this.requestStatus = PENDING;
-        setCategoryFrom(productDTO.getCategory());
-        setBrandFrom(productDTO.getBrand());
+//        this.category = new Category(productDTO.getCategory())
         this.model = productDTO.getModel();
         setConditionFrom(productDTO.getCondition());
         this.details = productDTO.getDetails();
@@ -99,15 +100,6 @@ public abstract class Product {
     // -------------------- Custom Methods --------------------
     public void setRequestStatusFrom(String requestStatus) {
         this.requestStatus = valueOf(enumFormat(requestStatus));
-    }
-
-    public void setCategoryFrom(String category) {
-
-
-    }
-
-    public void setBrandFrom(String brand) {
-
     }
 
     public void setConditionFrom(String condition) {

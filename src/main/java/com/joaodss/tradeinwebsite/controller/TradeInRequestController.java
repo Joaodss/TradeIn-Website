@@ -1,7 +1,7 @@
 package com.joaodss.tradeinwebsite.controller;
 
-import com.joaodss.tradeinwebsite.dto.ResponseTradeInRequestDTO;
-import com.joaodss.tradeinwebsite.dto.TradeInRequestDTO;
+import com.joaodss.tradeinwebsite.dto.request.ResponseTradeInRequestDTO;
+import com.joaodss.tradeinwebsite.dto.request.TradeInRequestDTO;
 
 import java.util.List;
 

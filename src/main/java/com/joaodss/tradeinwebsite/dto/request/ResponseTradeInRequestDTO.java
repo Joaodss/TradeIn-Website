@@ -1,7 +1,7 @@
-package com.joaodss.tradeinwebsite.dto;
+package com.joaodss.tradeinwebsite.dto.request;
 
-import com.joaodss.tradeinwebsite.dao.Product;
-import com.joaodss.tradeinwebsite.dao.TradeInRequest;
+import com.joaodss.tradeinwebsite.dao.request.Product;
+import com.joaodss.tradeinwebsite.dao.request.TradeInRequest;
 import com.neovisionaries.i18n.CountryCode;
 import lombok.*;
 

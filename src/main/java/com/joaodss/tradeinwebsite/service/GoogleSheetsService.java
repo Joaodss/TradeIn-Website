@@ -1,7 +1,7 @@
 package com.joaodss.tradeinwebsite.service;
 
 import com.google.api.services.sheets.v4.model.ValueRange;
-import com.joaodss.tradeinwebsite.dto.ResponseTradeInRequestDTO;
+import com.joaodss.tradeinwebsite.dto.request.ResponseTradeInRequestDTO;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,10 +1,12 @@
 package com.joaodss.tradeinwebsite.repository;
 
-import com.joaodss.tradeinwebsite.dao.Bag;
-import com.joaodss.tradeinwebsite.dao.Product;
-import com.joaodss.tradeinwebsite.dao.Shoes;
-import com.joaodss.tradeinwebsite.dao.TradeInRequest;
+import com.joaodss.tradeinwebsite.dao.request.Bag;
+import com.joaodss.tradeinwebsite.dao.request.Product;
+import com.joaodss.tradeinwebsite.dao.request.Shoes;
+import com.joaodss.tradeinwebsite.dao.request.TradeInRequest;
 import com.joaodss.tradeinwebsite.databaseutils.DbResetUtil;
+import com.joaodss.tradeinwebsite.repository.request.ProductRepository;
+import com.joaodss.tradeinwebsite.repository.request.TradeInRequestRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

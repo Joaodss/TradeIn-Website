@@ -1,11 +1,12 @@
-package com.joaodss.tradeinwebsite.dao;
+package com.joaodss.tradeinwebsite.dao.request;
 
 import com.joaodss.tradeinwebsite.builder.ProductBuilder;
-import com.joaodss.tradeinwebsite.dto.ProductDTO;
-import com.joaodss.tradeinwebsite.dto.TradeInRequestDTO;
+import com.joaodss.tradeinwebsite.dto.request.ProductDTO;
+import com.joaodss.tradeinwebsite.dto.request.TradeInRequestDTO;
 import com.neovisionaries.i18n.CountryCode;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.ArrayList;
