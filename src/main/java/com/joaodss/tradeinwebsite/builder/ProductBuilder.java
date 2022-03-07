@@ -42,6 +42,8 @@ public class ProductBuilder {
     public ProductBuilder setProductCategory(String category) {
         log.info("Setting product category");
         Category savedCategory = categoryRepository.findByCategoryName(category)
+                .stream()
+                .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Category: " + category + ", does not exist."));
         this.product.setCategory(savedCategory);
         return this;
@@ -50,6 +52,8 @@ public class ProductBuilder {
     public ProductBuilder setProductBrand(String brand) {
         log.info("Setting product brand");
         Brand savedBrand = brandRepository.findByBrandName(brand)
+                .stream()
+                .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Brand: " + brand + ", does not exist."));
         this.product.setBrand(savedBrand);
         return this;

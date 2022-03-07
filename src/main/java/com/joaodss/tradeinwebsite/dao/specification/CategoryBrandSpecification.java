@@ -1,9 +1,12 @@
 package com.joaodss.tradeinwebsite.dao.specification;
 
+import com.joaodss.tradeinwebsite.dto.specification.CategoryBrandSpecificationDTO;
+import com.joaodss.tradeinwebsite.dto.specification.NewCategoryBrandSpecificationDTO;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -70,6 +73,15 @@ public class CategoryBrandSpecification {
         this.externalPhotos = externalPhotos;
         this.mandatoryInternalPhotos = mandatoryInternalPhotos;
         this.internalPhotos = internalPhotos;
+    }
+
+    public CategoryBrandSpecification(NewCategoryBrandSpecificationDTO specificationDTO) {
+        this.category = new Category(specificationDTO.getCategory());
+        this.brand = new Brand(specificationDTO.getBrand());
+        this.mandatoryExternalPhotos = new HashSet<>(specificationDTO.getMandatoryExternalPhotos());
+        this.externalPhotos = new HashSet<>(specificationDTO.getExternalPhotos());
+        this.mandatoryInternalPhotos = new HashSet<>(specificationDTO.getMandatoryInternalPhotos());
+        this.internalPhotos = new HashSet<>(specificationDTO.getInternalPhotos());
     }
 
 
