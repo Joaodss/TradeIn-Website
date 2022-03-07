@@ -1,14 +1,12 @@
 package com.joaodss.tradeinwebsite.dto.request;
 
 import com.joaodss.tradeinwebsite.dao.request.Product;
-import com.joaodss.tradeinwebsite.enums.Brand;
-import com.joaodss.tradeinwebsite.enums.Category;
+import com.joaodss.tradeinwebsite.dao.specification.Brand;
+import com.joaodss.tradeinwebsite.dao.specification.Category;
 import com.joaodss.tradeinwebsite.enums.Condition;
 import com.joaodss.tradeinwebsite.enums.RequestStatus;
 import lombok.*;
 
-import static com.joaodss.tradeinwebsite.enums.Category.BAG;
-import static com.joaodss.tradeinwebsite.enums.Category.SHOES;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,8 +31,8 @@ public class ResponseProductDTO {
     public ResponseProductDTO(Product product) {
         this.id = product.getId();
         setRequestStatusFrom(product.getRequestStatus());
-//        setCategoryFrom(product.getCategory());
-//        setBrandFrom(product.getBrand());
+        setCategoryFrom(product.getCategory());
+        setBrandFrom(product.getBrand());
         this.model = product.getModel();
         setConditionFrom(product.getCondition());
         this.details = product.getDetails();
@@ -50,11 +48,11 @@ public class ResponseProductDTO {
     }
 
     public void setCategoryFrom(Category category) {
-
+        this.category = category.getCategoryName();
     }
 
     public void setBrandFrom(Brand brand) {
-
+        this.brand = brand.getBrandName();
     }
 
     public void setConditionFrom(Condition condition) {
@@ -62,12 +60,12 @@ public class ResponseProductDTO {
     }
 
     public void setBagDTOFrom(Product product) {
-        if (product.getCategory().equals(BAG))
+        if (product.getCategory().getCategoryName().equalsIgnoreCase("Bag"))
             this.bagDTO = new BagDTO(product);
     }
 
     public void setShoesDTOFrom(Product product) {
-        if (product.getCategory().equals(SHOES))
+        if (product.getCategory().getCategoryName().equalsIgnoreCase("Shoes"))
             this.shoesDTO = new ShoesDTO(product);
     }
 

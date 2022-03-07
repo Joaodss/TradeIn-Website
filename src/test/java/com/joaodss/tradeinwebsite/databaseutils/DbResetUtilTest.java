@@ -4,6 +4,8 @@ import com.joaodss.tradeinwebsite.dao.request.Bag;
 import com.joaodss.tradeinwebsite.dao.request.Product;
 import com.joaodss.tradeinwebsite.dao.request.Shoes;
 import com.joaodss.tradeinwebsite.dao.request.TradeInRequest;
+import com.joaodss.tradeinwebsite.dao.specification.Brand;
+import com.joaodss.tradeinwebsite.dao.specification.Category;
 import com.joaodss.tradeinwebsite.repository.request.TradeInRequestRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.*;
@@ -16,10 +18,6 @@ import java.sql.SQLException;
 import java.util.Set;
 
 import static com.joaodss.tradeinwebsite.enums.BagSize.MEDIUM;
-import static com.joaodss.tradeinwebsite.enums.Brand.CHANEL;
-import static com.joaodss.tradeinwebsite.enums.Brand.GUCCI;
-import static com.joaodss.tradeinwebsite.enums.Category.BAG;
-import static com.joaodss.tradeinwebsite.enums.Category.SHOES;
 import static com.joaodss.tradeinwebsite.enums.Condition.GOOD;
 import static com.joaodss.tradeinwebsite.enums.Condition.USED;
 import static com.joaodss.tradeinwebsite.enums.RequestStatus.PENDING;
@@ -36,9 +34,12 @@ class DbResetUtilTest {
     private final ApplicationContext applicationContext;
     private final TradeInRequestRepository tradeInRequestRepository;
 
-
-    private Product bag;
-    private Product shoes;
+    private final Category bag = new Category(1L, "Bag", Set.of());
+    private final Category shoes = new Category(2L, "Shoes", Set.of());
+    private final Brand chanel = new Brand(1L, "CHANEL", Set.of());
+    private final Brand gucci = new Brand(1L, "GUCCI", Set.of());
+    private Product bag1;
+    private Product shoes1;
     private TradeInRequest tradeInRequest1;
     private TradeInRequest tradeInRequest2;
 
@@ -51,10 +52,10 @@ class DbResetUtilTest {
                 "12345678",
                 US
         );
-        bag = new Bag(
+        bag1 = new Bag(
                 PENDING,
-                BAG,
-                GUCCI,
+                bag,
+                gucci,
                 "Simple bag",
                 USED,
                 "No details",
@@ -62,7 +63,7 @@ class DbResetUtilTest {
                 MEDIUM,
                 Set.of()
         );
-        tradeInRequest1.addProduct(bag);
+        tradeInRequest1.addProduct(bag1);
 
 
         tradeInRequest2 = new TradeInRequest(
@@ -72,17 +73,17 @@ class DbResetUtilTest {
                 "987654321",
                 PT
         );
-        shoes = new Shoes(
+        shoes1 = new Shoes(
                 PENDING,
-                SHOES,
-                CHANEL,
+                shoes,
+                chanel,
                 "Simple shoes",
                 GOOD,
                 "No details",
                 "link",
                 (short) 36
         );
-        tradeInRequest2.addProduct(shoes);
+        tradeInRequest2.addProduct(shoes1);
     }
 
     @AfterEach

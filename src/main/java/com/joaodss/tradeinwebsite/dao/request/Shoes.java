@@ -12,7 +12,6 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@DiscriminatorValue("SHOES")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

@@ -4,6 +4,8 @@ import com.joaodss.tradeinwebsite.dao.request.Bag;
 import com.joaodss.tradeinwebsite.dao.request.Product;
 import com.joaodss.tradeinwebsite.dao.request.Shoes;
 import com.joaodss.tradeinwebsite.dao.request.TradeInRequest;
+import com.joaodss.tradeinwebsite.dao.specification.Brand;
+import com.joaodss.tradeinwebsite.dao.specification.Category;
 import com.joaodss.tradeinwebsite.dto.request.ProductDTO;
 import com.joaodss.tradeinwebsite.dto.request.ResponseTradeInRequestDTO;
 import com.joaodss.tradeinwebsite.dto.request.ShoesDTO;
@@ -23,10 +25,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import static com.joaodss.tradeinwebsite.enums.BagSize.MEDIUM;
-import static com.joaodss.tradeinwebsite.enums.Brand.CHANEL;
-import static com.joaodss.tradeinwebsite.enums.Brand.GUCCI;
-import static com.joaodss.tradeinwebsite.enums.Category.BAG;
-import static com.joaodss.tradeinwebsite.enums.Category.SHOES;
 import static com.joaodss.tradeinwebsite.enums.Condition.GOOD;
 import static com.joaodss.tradeinwebsite.enums.Condition.USED;
 import static com.joaodss.tradeinwebsite.enums.RequestStatus.PENDING;
@@ -51,8 +49,13 @@ class TradeInResponseServiceTest {
     @Mock
     private TradeInRequestRepository repository;
 
-    private Product bag;
-    private Product shoes;
+
+    private final Category bag = new Category(1L, "Bag", Set.of());
+    private final Category shoes = new Category(2L, "Shoes", Set.of());
+    private final Brand chanel = new Brand(1L, "CHANEL", Set.of());
+    private final Brand gucci = new Brand(1L, "GUCCI", Set.of());
+    private Product bag1;
+    private Product shoes1;
     private TradeInRequest tradeInRequest1;
     private TradeInRequest tradeInRequest2;
     private final TradeInRequestDTO tradeInRequestDTO = new TradeInRequestDTO(
@@ -87,10 +90,10 @@ class TradeInResponseServiceTest {
                 US
         );
         tradeInRequest1.setId(1L);
-        bag = new Bag(
+        bag1 = new Bag(
                 PENDING,
-                BAG,
-                GUCCI,
+                bag,
+                gucci,
                 "Simple bag",
                 USED,
                 "No details",
@@ -98,8 +101,8 @@ class TradeInResponseServiceTest {
                 MEDIUM,
                 Set.of()
         );
-        bag.setId(1L);
-        tradeInRequest1.addProduct(bag);
+        bag1.setId(1L);
+        tradeInRequest1.addProduct(bag1);
 
         tradeInRequest2 = new TradeInRequest(
                 "Robin",
@@ -109,18 +112,18 @@ class TradeInResponseServiceTest {
                 PT
         );
         tradeInRequest2.setId(2L);
-        shoes = new Shoes(
+        shoes1 = new Shoes(
                 PENDING,
-                SHOES,
-                CHANEL,
+                shoes,
+                chanel,
                 "Simple shoes",
                 GOOD,
                 "No details",
                 "link",
                 (short) 36
         );
-        shoes.setId(2L);
-        tradeInRequest2.addProduct(shoes);
+        shoes1.setId(2L);
+        tradeInRequest2.addProduct(shoes1);
     }
 
 
@@ -265,7 +268,7 @@ class TradeInResponseServiceTest {
     @Test
     @Order(10)
     void testDeleteProductsFromGoogleDrive_useInternalMethods_multipleProducts_multipleRequests() {
-        tradeInRequest1.addProduct(shoes);
+        tradeInRequest1.addProduct(shoes1);
         ResponseTradeInRequestDTO responseTradeInRequestDTO = new ResponseTradeInRequestDTO(tradeInRequest1);
 
         tradeInResponseService.deleteProductsFromGoogleDrive(responseTradeInRequestDTO.getProducts());

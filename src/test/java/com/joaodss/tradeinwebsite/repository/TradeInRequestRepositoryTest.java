@@ -4,6 +4,8 @@ import com.joaodss.tradeinwebsite.dao.request.Bag;
 import com.joaodss.tradeinwebsite.dao.request.Product;
 import com.joaodss.tradeinwebsite.dao.request.Shoes;
 import com.joaodss.tradeinwebsite.dao.request.TradeInRequest;
+import com.joaodss.tradeinwebsite.dao.specification.Brand;
+import com.joaodss.tradeinwebsite.dao.specification.Category;
 import com.joaodss.tradeinwebsite.databaseutils.DbResetUtil;
 import com.joaodss.tradeinwebsite.repository.request.ProductRepository;
 import com.joaodss.tradeinwebsite.repository.request.TradeInRequestRepository;
@@ -21,10 +23,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import static com.joaodss.tradeinwebsite.enums.BagSize.MEDIUM;
-import static com.joaodss.tradeinwebsite.enums.Brand.CHANEL;
-import static com.joaodss.tradeinwebsite.enums.Brand.GUCCI;
-import static com.joaodss.tradeinwebsite.enums.Category.BAG;
-import static com.joaodss.tradeinwebsite.enums.Category.SHOES;
 import static com.joaodss.tradeinwebsite.enums.Condition.GOOD;
 import static com.joaodss.tradeinwebsite.enums.Condition.USED;
 import static com.joaodss.tradeinwebsite.enums.RequestStatus.PENDING;
@@ -41,6 +39,10 @@ class TradeInRequestRepositoryTest {
     private final TradeInRequestRepository tradeInRequestRepository;
     private final ProductRepository productRepository;
 
+    private final Category bag = new Category(1L, "Bag", Set.of());
+    private final Category shoes = new Category(2L, "Shoes", Set.of());
+    private final Brand chanel = new Brand(1L, "CHANEL", Set.of());
+    private final Brand gucci = new Brand(1L, "GUCCI", Set.of());
     private final TradeInRequest newTradeInRequest = new TradeInRequest(
             "Maria",
             "Doe",
@@ -50,8 +52,8 @@ class TradeInRequestRepositoryTest {
     );
     private final Product newBag = new Bag(
             PENDING,
-            BAG,
-            GUCCI,
+            bag,
+            gucci,
             "Simple bag",
             USED,
             "No details",
@@ -61,16 +63,16 @@ class TradeInRequestRepositoryTest {
     );
     private final Product newShoes = new Shoes(
             PENDING,
-            SHOES,
-            CHANEL,
+            shoes,
+            chanel,
             "Simple shoes",
             GOOD,
             "No details",
             "link to photos",
             (short) 36
     );
-    private Product bag;
-    private Product shoes;
+    private Product bag1;
+    private Product shoes1;
     private TradeInRequest tradeInRequest1;
     private TradeInRequest tradeInRequest2;
 
@@ -83,10 +85,10 @@ class TradeInRequestRepositoryTest {
                 "12345678",
                 US
         );
-        bag = new Bag(
+        bag1 = new Bag(
                 PENDING,
-                BAG,
-                GUCCI,
+                bag,
+                gucci,
                 "Simple bag",
                 USED,
                 "No details",
@@ -94,7 +96,7 @@ class TradeInRequestRepositoryTest {
                 MEDIUM,
                 Set.of()
         );
-        tradeInRequest1.addProduct(bag);
+        tradeInRequest1.addProduct(bag1);
 
 
         tradeInRequest2 = new TradeInRequest(
@@ -104,17 +106,17 @@ class TradeInRequestRepositoryTest {
                 "987654321",
                 PT
         );
-        shoes = new Shoes(
+        shoes1 = new Shoes(
                 PENDING,
-                SHOES,
-                CHANEL,
+                shoes,
+                chanel,
                 "Simple shoes",
                 GOOD,
                 "No details",
                 "link",
                 (short) 36
         );
-        tradeInRequest2.addProduct(shoes);
+        tradeInRequest2.addProduct(shoes1);
         tradeInRequestRepository.saveAll(List.of(tradeInRequest1, tradeInRequest2));
     }
 
@@ -201,8 +203,8 @@ class TradeInRequestRepositoryTest {
         List<TradeInRequest> elements =
                 new ArrayList<>(tradeInRequestRepository.findAllJoined());
 
-        assertEquals(List.of(bag), elements.get(0).getProducts());
-        assertEquals(List.of(shoes), elements.get(1).getProducts());
+        assertEquals(List.of(bag1), elements.get(0).getProducts());
+        assertEquals(List.of(shoes1), elements.get(1).getProducts());
     }
 
     @Test
@@ -210,7 +212,7 @@ class TradeInRequestRepositoryTest {
     void testReadTradeInRequest_byParentIdJoined_returnObjectWithChild() {
         TradeInRequest element = tradeInRequestRepository.findByIdJoined(2L)
                 .orElseThrow(() -> new RuntimeException("Element not found"));
-        assertEquals(List.of(shoes), element.getProducts());
+        assertEquals(List.of(shoes1), element.getProducts());
     }
 
     @Test
@@ -218,7 +220,7 @@ class TradeInRequestRepositoryTest {
     void testReadTradeInRequest_byParentEmailJoined_returnObjectWithChild() {
         List<TradeInRequest> elements =
                 new ArrayList<>(tradeInRequestRepository.findByEmailJoined("john.doe@email.com"));
-        assertEquals(List.of(bag), elements.get(0).getProducts());
+        assertEquals(List.of(bag1), elements.get(0).getProducts());
     }
 
     // -------------------- Update --------------------

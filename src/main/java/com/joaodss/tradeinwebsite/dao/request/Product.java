@@ -17,12 +17,12 @@ import static com.joaodss.tradeinwebsite.utils.EnumsUtil.enumFormat;
 import static javax.persistence.DiscriminatorType.STRING;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.InheritanceType.JOINED;
 import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
 @Entity
 @Table(name = "product")
-@Inheritance(strategy = SINGLE_TABLE)
-@DiscriminatorColumn(name = "product_type", discriminatorType = STRING)
+@Inheritance(strategy = JOINED)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -89,7 +89,8 @@ public abstract class Product {
     public Product(ProductDTO productDTO) {
         log.info("Constructing Product from DTO");
         this.requestStatus = PENDING;
-//        this.category = new Category(productDTO.getCategory())
+        this.category = new Category();
+        this.brand = new Brand();
         this.model = productDTO.getModel();
         setConditionFrom(productDTO.getCondition());
         this.details = productDTO.getDetails();

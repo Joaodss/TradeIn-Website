@@ -3,6 +3,8 @@ package com.joaodss.tradeinwebsite.builder;
 import com.joaodss.tradeinwebsite.dao.request.Bag;
 import com.joaodss.tradeinwebsite.dao.request.Product;
 import com.joaodss.tradeinwebsite.dao.request.Shoes;
+import com.joaodss.tradeinwebsite.dao.specification.Brand;
+import com.joaodss.tradeinwebsite.dao.specification.Category;
 import com.joaodss.tradeinwebsite.dto.request.BagDTO;
 import com.joaodss.tradeinwebsite.dto.request.ProductDTO;
 import com.joaodss.tradeinwebsite.dto.request.ShoesDTO;
@@ -14,8 +16,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.Set;
 
-import static com.joaodss.tradeinwebsite.enums.Brand.CHANEL;
-import static com.joaodss.tradeinwebsite.enums.Category.SHOES;
 import static com.joaodss.tradeinwebsite.enums.Condition.GOOD;
 import static com.joaodss.tradeinwebsite.enums.RequestStatus.PENDING;
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,7 +23,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(OrderAnnotation.class)
 class ProductBuilderTest {
-
+    private final Category bag = new Category(1L, "Bag", Set.of());
+    private final Category shoes = new Category(2L, "Shoes", Set.of());
+    private final Brand chanel = new Brand(1L, "CHANEL", Set.of());
     private final ProductDTO shoesProductDTO = new ProductDTO(
             "Shoes",
             "Gucci",
@@ -34,10 +36,10 @@ class ProductBuilderTest {
             null,
             new ShoesDTO((short) 12)
     );
-    private final Product shoes = new Shoes(
+    private final Product shoes1 = new Shoes(
             PENDING,
-            SHOES,
-            CHANEL,
+            bag,
+            chanel,
             "Simple shoes",
             GOOD,
             "No details",
@@ -99,8 +101,8 @@ class ProductBuilderTest {
     @Test
     @Order(3)
     void testBuild_ProductCreated_returnProduct() {
-        productBuilder.setProduct(shoes);
-        assertEquals(shoes, productBuilder.build());
+        productBuilder.setProduct(shoes1);
+        assertEquals(shoes1, productBuilder.build());
     }
 
     @Test

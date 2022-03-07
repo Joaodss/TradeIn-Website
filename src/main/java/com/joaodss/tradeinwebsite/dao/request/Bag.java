@@ -17,7 +17,6 @@ import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.EAGER;
 
 @Entity
-@DiscriminatorValue("BAG")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
