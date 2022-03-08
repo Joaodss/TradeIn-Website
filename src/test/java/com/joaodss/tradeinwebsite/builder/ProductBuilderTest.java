@@ -1,13 +1,14 @@
 package com.joaodss.tradeinwebsite.builder;
 
-import com.joaodss.tradeinwebsite.dao.request.Bag;
-import com.joaodss.tradeinwebsite.dao.request.Product;
-import com.joaodss.tradeinwebsite.dao.request.Shoes;
-import com.joaodss.tradeinwebsite.dao.specification.Brand;
-import com.joaodss.tradeinwebsite.dao.specification.Category;
-import com.joaodss.tradeinwebsite.dto.request.BagDTO;
-import com.joaodss.tradeinwebsite.dto.request.ProductDTO;
-import com.joaodss.tradeinwebsite.dto.request.ShoesDTO;
+import com.joaodss.tradeinwebsite.request.builder.ProductBuilder;
+import com.joaodss.tradeinwebsite.request.dao.Bag;
+import com.joaodss.tradeinwebsite.request.dao.Product;
+import com.joaodss.tradeinwebsite.request.dao.Shoes;
+import com.joaodss.tradeinwebsite.categorybrandspecification.dao.Brand;
+import com.joaodss.tradeinwebsite.categorybrandspecification.dao.Category;
+import com.joaodss.tradeinwebsite.request.dto.BagDTO;
+import com.joaodss.tradeinwebsite.request.dto.ProductDTO;
+import com.joaodss.tradeinwebsite.request.dto.ShoesDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -16,8 +17,8 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.Set;
 
-import static com.joaodss.tradeinwebsite.enums.Condition.GOOD;
-import static com.joaodss.tradeinwebsite.enums.RequestStatus.PENDING;
+import static com.joaodss.tradeinwebsite.request.enums.Condition.GOOD;
+import static com.joaodss.tradeinwebsite.request.enums.RequestStatus.PENDING;
 import static org.junit.jupiter.api.Assertions.*;
 
 

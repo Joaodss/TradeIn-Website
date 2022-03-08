@@ -1,12 +1,12 @@
 package com.joaodss.tradeinwebsite.databaseutils;
 
-import com.joaodss.tradeinwebsite.dao.request.Bag;
-import com.joaodss.tradeinwebsite.dao.request.Product;
-import com.joaodss.tradeinwebsite.dao.request.Shoes;
-import com.joaodss.tradeinwebsite.dao.request.TradeInRequest;
-import com.joaodss.tradeinwebsite.dao.specification.Brand;
-import com.joaodss.tradeinwebsite.dao.specification.Category;
-import com.joaodss.tradeinwebsite.repository.request.TradeInRequestRepository;
+import com.joaodss.tradeinwebsite.request.dao.Bag;
+import com.joaodss.tradeinwebsite.request.dao.Product;
+import com.joaodss.tradeinwebsite.request.dao.Shoes;
+import com.joaodss.tradeinwebsite.request.dao.TradeInRequest;
+import com.joaodss.tradeinwebsite.categorybrandspecification.dao.Brand;
+import com.joaodss.tradeinwebsite.categorybrandspecification.dao.Category;
+import com.joaodss.tradeinwebsite.request.repository.TradeInRequestRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,10 @@ import org.springframework.test.context.ActiveProfiles;
 import java.sql.SQLException;
 import java.util.Set;
 
-import static com.joaodss.tradeinwebsite.enums.BagSize.MEDIUM;
-import static com.joaodss.tradeinwebsite.enums.Condition.GOOD;
-import static com.joaodss.tradeinwebsite.enums.Condition.USED;
-import static com.joaodss.tradeinwebsite.enums.RequestStatus.PENDING;
+import static com.joaodss.tradeinwebsite.request.enums.BagSize.MEDIUM;
+import static com.joaodss.tradeinwebsite.request.enums.Condition.GOOD;
+import static com.joaodss.tradeinwebsite.request.enums.Condition.USED;
+import static com.joaodss.tradeinwebsite.request.enums.RequestStatus.PENDING;
 import static com.neovisionaries.i18n.CountryCode.PT;
 import static com.neovisionaries.i18n.CountryCode.US;
 import static org.junit.jupiter.api.Assertions.*;
