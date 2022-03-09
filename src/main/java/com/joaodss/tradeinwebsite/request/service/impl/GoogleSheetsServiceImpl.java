@@ -7,8 +7,10 @@ import com.joaodss.tradeinwebsite.request.dto.ResponseProductDTO;
 import com.joaodss.tradeinwebsite.request.dto.ResponseTradeInRequestDTO;
 import com.joaodss.tradeinwebsite.request.service.GoogleSheetsService;
 import com.joaodss.tradeinwebsite.utils.GoogleSheetsUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -18,11 +20,11 @@ import java.util.List;
 @Slf4j
 public class GoogleSheetsServiceImpl implements GoogleSheetsService {
 
-    @Value("${google.sheets.url}")
-    private String googleSheetId;
+    @Value("#{systemProperties['google.sheets.id']}")
+    public String googleSheetId;
 
-    @Value("${google.sheets.sheet-name}")
-    private String sheetName;
+    @Value("#{systemProperties['google.sheets.sheet-name']}")
+    public String sheetName;
 
     private final Sheets sheetsService;
 

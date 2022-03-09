@@ -1,8 +1,9 @@
-package com.joaodss.tradeinwebsite.categorybrandspecification.service;
+package com.joaodss.tradeinwebsite.categorybrandspecification.service.impl;
 
 import com.joaodss.tradeinwebsite.categorybrandspecification.dao.Category;
 import com.joaodss.tradeinwebsite.categorybrandspecification.dto.CategoryDTO;
 import com.joaodss.tradeinwebsite.categorybrandspecification.repository.CategoryRepository;
+import com.joaodss.tradeinwebsite.categorybrandspecification.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
