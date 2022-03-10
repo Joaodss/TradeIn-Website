@@ -5,14 +5,14 @@ import com.joaodss.tradeinwebsite.categorybrandspecification.dto.NewCategoryBran
 
 import java.util.List;
 
-public interface CategoryBrandService {
+public interface SpecificationService {
 
     // -------------------- Get Specifications --------------------
     List<CategoryBrandSpecificationDTO> getAllSpecifications();
 
-    CategoryBrandSpecificationDTO getSpecificationsById(long Id);
+    CategoryBrandSpecificationDTO getSpecificationById(long Id);
 
-    CategoryBrandSpecificationDTO getSpecificationsByCategoryAndBrand(String category, String brand);
+    CategoryBrandSpecificationDTO getSpecificationByCategoryAndBrand(String category, String brand);
 
     // -------------------- Create Specifications --------------------
     CategoryBrandSpecificationDTO createSpecification(NewCategoryBrandSpecificationDTO specification);

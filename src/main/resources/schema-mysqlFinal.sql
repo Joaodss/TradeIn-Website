@@ -139,3 +139,42 @@ VALUES (1, 'Alexander McQueen'),
        (26, 'The Row'),
        (27, 'Valentino'),
        (28, 'YSL');
+
+INSERT IGNORE INTO `category_brand_specification`(`id`, `brand_id`, `category_id`)
+VALUES (1, 11, 1),
+       (2, 23, 1),
+       (3, 11, 2),
+       (4, 23, 2);
+
+INSERT IGNORE INTO `mandatory_external_photo_tags`(`category_brand_specification_id`, `tag`)
+VALUES (1, 'external-top'),
+       (1, 'external-front'),
+       (1, 'external-back'),
+       (1, 'external-logo'),
+       (2, 'external-front'),
+       (2, 'external-back'),
+       (2, 'external-top'),
+       (3, 'external-front'),
+       (3, 'external-back'),
+       (3, 'external-top'),
+       (4, 'external-front'),
+       (4, 'external-back'),
+       (4, 'external-top'),
+       (4, 'external-zipper');
+
+INSERT IGNORE INTO `external_photo_tags`(`category_brand_specification_id`, `tag`)
+VALUES (2, 'external-hardware'),
+       (4, 'external-hardware');
+
+INSERT IGNORE INTO `mandatory_internal_photo_tags`(`category_brand_specification_id`, `tag`)
+VALUES (1, 'internal-zipper'),
+       (1, 'internal-inside'),
+       (2, 'internal-inside'),
+       (2, 'internal-logo'),
+       (2, 'internal-code'),
+       (3, 'internal-zipper'),
+       (4, 'internal-logo');
+
+INSERT IGNORE INTO `internal_photo_tags`(`category_brand_specification_id`, `tag`)
+VALUES (1, 'internal-logo'),
+       (4, 'internal-zipper');

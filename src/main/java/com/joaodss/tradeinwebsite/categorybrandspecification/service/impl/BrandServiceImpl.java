@@ -61,7 +61,7 @@ public class BrandServiceImpl implements BrandService {
     public List<String> createBrands(List<String> brands) {
         log.info("Adding brands: {}", brands);
         for (String brand : brands) {
-            if (!brandRepository.existsByBrandName(brand))
+            if (!brandRepository.existsByBrandName(brand) && brand != null && !brand.isBlank())
                 brandRepository.save(new Brand(brand));
         }
         return getAllBrandNames();

@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -28,11 +29,11 @@ public class CategoryBrandSpecification {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @ManyToOne(cascade = {MERGE}, optional = false, fetch = EAGER)
+    @ManyToOne(cascade = {}, optional = false, fetch = EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne(cascade = {MERGE}, optional = false, fetch = EAGER)
+    @ManyToOne(cascade = {}, optional = false, fetch = EAGER)
     @JoinColumn(name = "brand_id")
     private Brand brand;
 

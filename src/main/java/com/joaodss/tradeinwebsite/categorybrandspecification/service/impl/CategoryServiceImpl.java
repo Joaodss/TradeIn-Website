@@ -61,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
     public List<String> createCategories(List<String> categories) {
         log.info("Adding categories: {}", categories);
         for (String category : categories) {
-            if (!categoryRepository.existsByCategoryName(category))
+            if (!categoryRepository.existsByCategoryName(category) && category != null && !category.isBlank())
                 categoryRepository.save(new Category(category));
         }
         return getAllCategoryNames();
