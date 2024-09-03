@@ -75,11 +75,11 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
           cache: maven
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: integration-tests-jacoco
           path: target/
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: unit-tests-jacoco
           path: target/
